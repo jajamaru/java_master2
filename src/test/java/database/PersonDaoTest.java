@@ -50,7 +50,6 @@ public class PersonDaoTest {
   }
 
   @Test
-  @Transactional
   @Rollback(true)
   public void update() {
     final String name = "abcd";
@@ -64,14 +63,12 @@ public class PersonDaoTest {
   }
 
   @Test
-  @Transactional
   @Rollback(true)
   public void delete() {
     Assert.assertNotNull(dao.delete(1));
   }
 
   @Test
-  @Transactional
   @Rollback(true)
   public void create() {
     final PersonDo person = new PersonDo();
