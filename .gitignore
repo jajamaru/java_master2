@@ -3,3 +3,5 @@ target
 .project
 .classpath
 /build/
+
+src\test\resources\configTest\dataSourceTest.properties
