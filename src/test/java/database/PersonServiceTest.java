@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -49,16 +48,15 @@ public class PersonServiceTest {
   }
 
   @Test
-  @Rollback(true)
   public void create() {
     final PersonDo person = new PersonDo();
     person.setName("truc");
     person.setBirthday(Date.valueOf("2003-01-01"));
     service.createPerson(person);
+    Assert.assertEquals(service.findAllPerson().size(), 4);
   }
 
   @Test
-  @Rollback(true)
   public void update() {
     final String name = "abcd";
     PersonDo person = service.findPerson(1);
@@ -71,9 +69,13 @@ public class PersonServiceTest {
   }
 
   @Test
-  @Rollback(true)
   public void delete() {
     Assert.assertNotNull(service.deletePerson(1));
+  }
+
+  @Test
+  public void deleteAll() {
+    Assert.assertEquals(3, service.deleteAllPerson());
   }
 
 }

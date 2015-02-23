@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -50,7 +49,6 @@ public class PersonDaoTest {
   }
 
   @Test
-  @Rollback(true)
   public void update() {
     final String name = "abcd";
     PersonDo person = dao.find(1);
@@ -63,13 +61,16 @@ public class PersonDaoTest {
   }
 
   @Test
-  @Rollback(true)
   public void delete() {
     Assert.assertNotNull(dao.delete(1));
   }
 
   @Test
-  @Rollback(true)
+  public void deleteAll() {
+    Assert.assertEquals(3, dao.deleteAll());
+  }
+
+  @Test
   public void create() {
     final PersonDo person = new PersonDo();
     person.setName("New");

@@ -6,8 +6,7 @@ package dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -23,19 +22,19 @@ import entity.PersonDo;
  *
  */
 @Repository("personDao")
-@Transactional(propagation = Propagation.REQUIRED)
+@Transactional(propagation = Propagation.MANDATORY)
 public class PersonDao extends IPersonDao {
 
-  @PersistenceUnit(unitName = "pu")
-  private EntityManagerFactory entityManagerFactory;
+  @PersistenceContext(unitName = "pu")
+  private EntityManager entityManager;
 
   /* (non-Javadoc)
    * @see dao.IDao#find(int)
    */
   @Override
   public PersonDo find(final int id) {
-    final TypedQuery<PersonDo> query = entityManagerFactory.createEntityManager().createNamedQuery(
-        "PersonDo.find", PersonDo.class);
+    final TypedQuery<PersonDo> query = entityManager.createNamedQuery("PersonDo.find",
+        PersonDo.class);
     query.setParameter("id", id);
     return query.getSingleResult();
   }
@@ -45,8 +44,8 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public List<? extends PersonDo> findAll() {
-    final TypedQuery<PersonDo> query = entityManagerFactory.createEntityManager().createNamedQuery(
-        "PersonDo.findAll", PersonDo.class);
+    final TypedQuery<PersonDo> query = entityManager.createNamedQuery("PersonDo.findAll",
+        PersonDo.class);
     return query.getResultList();
   }
 
@@ -55,8 +54,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public void update(final PersonDo obj) {
-    final EntityManager em = entityManagerFactory.createEntityManager();
-    em.merge(obj);
+    entityManager.merge(obj);
   }
 
   /* (non-Javadoc)
@@ -64,11 +62,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public int delete(final int id) {
-    final EntityManager em = entityManagerFactory.createEntityManager();
-
-    //    em.getTransaction().begin();
-
-    final Query query = em.createNamedQuery("PersonDo.delete");
+    final Query query = entityManager.createNamedQuery("PersonDo.delete");
     query.setParameter("id", id);
     final int nb = query.executeUpdate();
 
@@ -81,8 +75,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public int deleteAll() {
-    final EntityManager em = entityManagerFactory.createEntityManager();
-    final Query query = em.createNamedQuery("PersonDo.deleteAll");
+    final Query query = entityManager.createNamedQuery("PersonDo.deleteAll");
     //    em.getTransaction().begin();
     final int nb = query.executeUpdate();
     //    em.getTransaction().commit();
@@ -94,11 +87,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public void create(final PersonDo obj) {
-    final EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-    //    entityManager.getTransaction().begin();
     entityManager.persist(obj);
-    //    entityManager.getTransaction().commit();
   }
 
 }
