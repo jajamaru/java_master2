@@ -10,10 +10,11 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder location="classpath:configTest/databaseTest.properties" />
+	<context:property-placeholder
+		location="classpath:configTest/databaseTest.properties" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${database.driver}" p:url="${database.url}"
 		p:username="${database.user}" p:password="${database.password}" />
-		
+
 </beans>

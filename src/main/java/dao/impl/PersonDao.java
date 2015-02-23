@@ -64,10 +64,7 @@ public class PersonDao extends IPersonDao {
   public int delete(final int id) {
     final Query query = entityManager.createNamedQuery("PersonDo.delete");
     query.setParameter("id", id);
-    final int nb = query.executeUpdate();
-
-    //    em.getTransaction().commit();
-    return nb;
+    return query.executeUpdate();
   }
 
   /* (non-Javadoc)
@@ -76,10 +73,7 @@ public class PersonDao extends IPersonDao {
   @Override
   public int deleteAll() {
     final Query query = entityManager.createNamedQuery("PersonDo.deleteAll");
-    //    em.getTransaction().begin();
-    final int nb = query.executeUpdate();
-    //    em.getTransaction().commit();
-    return nb;
+    return query.executeUpdate();
   }
 
   /* (non-Javadoc)
