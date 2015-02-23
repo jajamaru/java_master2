@@ -3,7 +3,10 @@
  */
 package database;
 
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import junit.framework.Assert;
 
@@ -71,10 +74,12 @@ public class PersonDaoTest {
   }
 
   @Test
-  public void create() {
+  public void create() throws ParseException {
     final PersonDo person = new PersonDo();
     person.setName("New");
-    person.setBirthday(Date.valueOf("2014-01-01"));
+    DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    person.setBirthday(sdf.parse("01/01/2014"));
+    System.out.println(person.getBirthday());
     dao.create(person);
     Assert.assertEquals(dao.findAll().size(), 4);
   }
