@@ -8,7 +8,6 @@ import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -28,7 +27,7 @@ import presentation.model.PersonForm;
 public class PersonTestController {
 
   @RequestMapping(method = RequestMethod.GET)
-  public String formPerson(final Model model) {
+  public String formPerson(final ModelMap model) {
     final PersonForm person = new PersonForm();
     model.addAttribute("person", person);
     model.addAttribute("result", "Aucun changement");
@@ -40,12 +39,11 @@ public class PersonTestController {
   final PersonForm person, final BindingResult result, final ModelMap model) {
     if (result.hasErrors()) {
       model.addAttribute("result", "Une erreur est survenue dans l'ajout de la personne");
-      return "personTest";
     } else {
       model.addAttribute("result", "Personne ajoutée avec success");
-      return "personTestInfo";
+      model.addAttribute("person", person);
     }
-
+    return "personTest";
   }
 
   @InitBinder

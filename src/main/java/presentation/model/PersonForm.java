@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -18,10 +19,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class PersonForm {
 
   @NotNull(message = "person.name.error.notnull")
+  @NotEmpty
   @Size(min = 2, message = "person.name.error.size")
   private String name;
 
   @NotNull(message = "person.date.error.notnull")
+  @NotEmpty
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   @Past(message = "person.date.error.past")
   private Date   birthday;

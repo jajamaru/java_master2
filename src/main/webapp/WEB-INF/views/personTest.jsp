@@ -27,9 +27,9 @@
 		</div>
 	</form:form>
 	<p>${result}</p>
-	<!-- 	<ul> -->
-	<%-- 		<li>${person.name}</li> --%>
-	<%-- 		<li>${person.birthday}</li> --%>
-	<!-- 	</ul> -->
+	<ul>
+		<li>${person.name}</li>
+		<li>${person.birthday}</li>
+	</ul>
 </body>
 </html>
