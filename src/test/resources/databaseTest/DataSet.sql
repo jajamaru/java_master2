@@ -1,3 +1,4 @@
+ALTER TABLE `PERSON` AUTO_INCREMENT = 1;
 INSERT INTO `PERSON` (name, birthday) VALUES 
 	('toto', '2000-01-01'),
 	('titi', '2001-01-01'),

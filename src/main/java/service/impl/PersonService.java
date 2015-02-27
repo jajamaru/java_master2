@@ -5,12 +5,15 @@ package service.impl;
 
 import java.util.List;
 
+import mapper.PersonMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import presentation.dto.PersonDto;
 import service.IPersonService;
 import dao.IPersonDao;
 import entity.PersonDo;
@@ -31,8 +34,9 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#createPerson(entity.PersonDo)
    */
   @Override
-  public void createPerson(final PersonDo person) {
-    dao.create(person);
+  public void createPerson(final PersonDto dto) {
+    final PersonDo personDo = PersonMapper.convert(dto);
+    dao.create(personDo);
   }
 
   /* (non-Javadoc)
@@ -47,8 +51,9 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#updatePerson(entity.PersonDo)
    */
   @Override
-  public void updatePerson(final PersonDo person) {
-    dao.update(person);
+  public void updatePerson(final PersonDto dto) {
+    final PersonDo personDo = PersonMapper.convert(dto);
+    dao.update(personDo);
   }
 
   /* (non-Javadoc)

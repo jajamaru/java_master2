@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import presentation.dto.PersonDto;
 import service.IPersonService;
 import entity.PersonDo;
 
@@ -49,10 +50,10 @@ public class PersonServiceTest {
 
   @Test
   public void create() {
-    final PersonDo person = new PersonDo();
-    person.setName("truc");
-    person.setBirthday(Date.valueOf("2003-01-01"));
-    service.createPerson(person);
+    final PersonDto dto = new PersonDto();
+    dto.setName("truc");
+    dto.setBirthday(Date.valueOf("2003-01-01"));
+    service.createPerson(dto);
     Assert.assertEquals(service.findAllPerson().size(), 4);
   }
 
@@ -61,10 +62,17 @@ public class PersonServiceTest {
     final String name = "abcd";
     PersonDo person = service.findPerson(1);
 
-    person.setName(name);
-    service.updatePerson(person);
+    // On récupère le do popur le convertir en dto
+    final PersonDto dto = new PersonDto();
+    dto.setName(person.getName());
+    dto.setBirthday(person.getBirthday());
+    
+    // On change le champs name du dto
+    dto.setName(name);
+    service.updatePerson(dto);
 
     person = service.findPerson(1);
+    System.out.println(person.getName() + "[ " + person.getBirthday() + " ]");
     Assert.assertEquals(name, person.getName());
   }
 

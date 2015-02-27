@@ -17,6 +17,7 @@ public abstract class IDao<T> {
    * 
    */
   public IDao() {
+    //empty method
   }
 
   /**
