@@ -31,26 +31,26 @@ public class PersonDo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int    id;
+  private Integer id;
 
   @Column(name = "name")
-  private String name;
+  private String  name;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "birthday")
-  private Date   birthday;
+  private Date    birthday;
 
   /**
    * @return the id
    */
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
   /**
    * @param id the id to set
    */
-  public void setId(final int id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 

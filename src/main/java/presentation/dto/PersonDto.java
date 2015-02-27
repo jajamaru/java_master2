@@ -11,8 +11,23 @@ import java.util.Date;
  */
 public class PersonDto {
 
-  private String name;
-  private Date   birthday;
+  private Integer id;
+  private String  name;
+  private Date    birthday;
+
+  /**
+   * @return the id
+   */
+  public Integer getId() {
+    return id;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
   /**
    * @return the name

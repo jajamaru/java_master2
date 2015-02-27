@@ -64,15 +64,15 @@ public class PersonServiceTest {
 
     // On récupère le do popur le convertir en dto
     final PersonDto dto = new PersonDto();
+    dto.setId(person.getId());
     dto.setName(person.getName());
     dto.setBirthday(person.getBirthday());
-    
+
     // On change le champs name du dto
     dto.setName(name);
     service.updatePerson(dto);
 
     person = service.findPerson(1);
-    System.out.println(person.getName() + "[ " + person.getBirthday() + " ]");
     Assert.assertEquals(name, person.getName());
   }
 
