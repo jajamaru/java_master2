@@ -18,6 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class PersonForm {
 
+  private Integer id;
+  
   @NotNull(message = "person.name.error.notnull")
   @NotEmpty
   @Size(min = 2, message = "person.name.error.size")
@@ -27,6 +29,20 @@ public class PersonForm {
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   @Past(message = "person.date.error.past")
   private Date   birthday;
+
+  /**
+   * @return the id
+   */
+  public Integer getId() {
+    return id;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
   /**
    * @return the name

@@ -35,7 +35,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public void createPerson(final PersonDto dto) {
-    final PersonDo personDo = PersonMapper.convert(dto);
+    final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     dao.create(personDo);
   }
 
@@ -52,7 +52,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public void updatePerson(final PersonDto dto) {
-    final PersonDo personDo = PersonMapper.convert(dto);
+    final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     dao.update(personDo);
   }
 
