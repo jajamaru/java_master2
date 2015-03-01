@@ -3,6 +3,7 @@
  */
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mapper.PersonMapper;
@@ -65,14 +66,33 @@ public class PersonService implements IPersonService {
 
   }
 
+  /* (non-Javadoc)
+   * @see service.IPersonService#deleteAllPerson()
+   */
   @Override
   public int deleteAllPerson() {
     return dao.deleteAll();
   }
 
+  /* (non-Javadoc)
+   * @see service.IPersonService#findAllPerson()
+   */
   @Override
   public List<? extends PersonDo> findAllPerson() {
     return dao.findAll();
+  }
+
+  /* (non-Javadoc)
+   * @see service.IPersonService#findFriends()
+   */
+  @Override
+  public List<? extends PersonDo> findFriends(final Integer id) {
+    final PersonDo person = dao.find(id);
+    final List<PersonDo> list = new ArrayList<PersonDo>();
+    if (person != null) {
+      //TODO Récupérer les amis de la personne
+    }
+    return list;
   }
 
 }
