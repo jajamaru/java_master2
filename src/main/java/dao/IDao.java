@@ -5,8 +5,6 @@ package dao;
 
 import java.util.List;
 
-import exception.EntityNotFoundException;
-
 /**
  * @author romain
  *
@@ -26,7 +24,7 @@ public abstract class IDao<T> {
    * @param id Id of object
    * @return <T> object
    */
-  public abstract T find(final int id) throws EntityNotFoundException;
+  public abstract T find(final int id);
 
   /**
    * Find All <T> objects
@@ -46,7 +44,7 @@ public abstract class IDao<T> {
    * @param id Id of object
    * @return Number of deleted object in database
    */
-  public abstract int delete(final int id) throws EntityNotFoundException;
+  public abstract int delete(final int id);
 
   /**
    * Delete all <T> objects

@@ -7,7 +7,7 @@ package exception;
  * @author romain
  *
  */
-public class EntityNotFoundException extends RuntimeException {
+public class FriendsNotFoundException extends RuntimeException {
 
   /**
    * 

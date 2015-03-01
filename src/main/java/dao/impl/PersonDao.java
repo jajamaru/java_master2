@@ -84,4 +84,10 @@ public class PersonDao extends IPersonDao {
     entityManager.persist(obj);
   }
 
+  @Override
+  public List<? extends PersonDo> findFriends(final Integer id) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }
