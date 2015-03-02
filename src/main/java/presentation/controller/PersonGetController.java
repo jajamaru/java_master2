@@ -36,6 +36,20 @@ public class PersonGetController {
     return "personList";
   }
 
+  @RequestMapping(value = "?result={result}", method = RequestMethod.GET)
+  public String getListPersonWithRequestFeedback(final Model model, @PathVariable
+  final String result) {
+    model.addAttribute("personList", service.findAllPerson());
+    if (isValidResult(result)) {
+      if (isOkResult(result)) {
+        model.addAttribute("result", "OK");
+      } else {
+        model.addAttribute("result", "NOK");
+      }
+    }
+    return "personList";
+  }
+
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public String getSinglePerson(final Model model, @PathVariable
   final Integer id) {
@@ -48,12 +62,24 @@ public class PersonGetController {
     }
   }
 
-  @RequestMapping(value = "/{id}/persons", method = RequestMethod.GET)
+  @RequestMapping(value = "/{id}/friends", method = RequestMethod.GET)
   public String getFriends(final Model model, @PathVariable
   final Integer id) {
     final List<? extends PersonDo> list = service.findFriends(id);
     model.addAttribute("friendList", list);
     return (list != null) ? "personFriends" : "404";
+  }
+
+  private boolean isValidResult(final String result) {
+    return isOkResult(result) || isNokResult(result);
+  }
+
+  private boolean isOkResult(final String result) {
+    return result.equalsIgnoreCase("ok");
+  }
+
+  private boolean isNokResult(final String result) {
+    return result.equalsIgnoreCase("nok");
   }
 
 }
