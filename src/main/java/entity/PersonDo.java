@@ -23,10 +23,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "PERSON")
 @NamedQueries({
-    @NamedQuery(name = "PersonDo.find", query = "Select p from PersonDo p where p.id = :id"),
+    @NamedQuery(name = "PersonDo.find", query = "SELECT p from PersonDo p where p.id = :id"),
     @NamedQuery(name = "PersonDo.findAll", query = "SELECT p FROM PersonDo p"),
     @NamedQuery(name = "PersonDo.delete", query = "DELETE FROM PersonDo WHERE id = :id"),
-    @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo") })
+    @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo")})
 public class PersonDo {
 
   @Id
