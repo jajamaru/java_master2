@@ -3,6 +3,7 @@
  */
 package presentation.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -14,7 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import presentation.dto.PersonDto;
+import presentation.dto.xml.PersonListXml;
+import presentation.dto.xml.PersonXml;
 import presentation.model.PersonForm;
 import service.IPersonService;
 import entity.PersonDo;
@@ -35,6 +40,20 @@ public class PersonGetController {
   public String getListPerson(final Model model) {
     model.addAttribute("personList", service.findAllPerson());
     return "personList";
+  }
+
+  @ResponseBody
+  @RequestMapping(value = "/json", method = RequestMethod.GET)
+  public PersonDto[] getListPersonWithReturnTypeJson() {
+    final List<? extends PersonDo> list = service.findAllPerson();
+    return getPersonInJson(list);
+  }
+
+  @ResponseBody
+  @RequestMapping(value = "/xml", method = RequestMethod.GET)
+  public PersonListXml getListPersonWithReturnTypeXml() {
+    final List<? extends PersonDo> list = service.findAllPerson();
+    return getPersonInXml(list);
   }
 
   @RequestMapping(value = "?result={result}", method = RequestMethod.GET)
@@ -75,16 +94,56 @@ public class PersonGetController {
   //    return (list != null) ? "personFriends" : "404";
   //  }
 
+  private PersonDto[] getPersonInJson(final List<? extends PersonDo> list) {
+    final List<PersonDto> tab = new ArrayList<PersonDto>();
+    for (PersonDo person : list) {
+      final PersonDto dto = new PersonDto();
+      dto.setId(person.getId());
+      dto.setName(person.getName());
+      dto.setBirthday(person.getBirthday());
+      tab.add(dto);
+    }
+    final PersonDto[] tabDto = new PersonDto[tab.size()];
+    tab.toArray(tabDto);
+    return tabDto;
+  }
+
+  private PersonListXml getPersonInXml(final List<? extends PersonDo> list) {
+    final PersonListXml persons = new PersonListXml();
+    final List<PersonXml> pList = new ArrayList<PersonXml>();
+    for (PersonDo person : list) {
+      final PersonXml xml = new PersonXml();
+      xml.setId(person.getId());
+      xml.setName(person.getName());
+      xml.setBirthday(person.getBirthday());
+      pList.add(xml);
+    }
+    persons.setPerson(pList);
+    return persons;
+  }
+
   private boolean isValidResult(final String result) {
     return isOkResult(result) || isNokResult(result);
   }
 
   private boolean isOkResult(final String result) {
-    return result.equalsIgnoreCase("ok");
+    return "ok".equalsIgnoreCase(result);
   }
 
   private boolean isNokResult(final String result) {
-    return result.equalsIgnoreCase("nok");
+    return "nok".equalsIgnoreCase(result);
   }
+
+  //  private boolean isValidReturnType(final String type) {
+  //    return isJsonReturnType(type) || isXmlReturnType(type);
+  //  }
+  //
+  //  private boolean isJsonReturnType(final String type) {
+  //    return "json".equalsIgnoreCase(type);
+  //  }
+  //
+  //  private boolean isXmlReturnType(final String type) {
+  //    return "xml".equalsIgnoreCase(type);
+  //  }
 
 }
