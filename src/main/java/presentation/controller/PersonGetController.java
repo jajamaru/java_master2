@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import presentation.model.PersonForm;
 import service.IPersonService;
 import entity.PersonDo;
 
@@ -54,21 +55,25 @@ public class PersonGetController {
   public String getSinglePerson(final Model model, @PathVariable
   final Integer id) {
     try {
-      final PersonDo person = service.findPerson(id);
-      model.addAttribute("person", person);
+      final PersonDo personDo = service.findPerson(id);
+      final PersonForm form = new PersonForm();
+      form.setId(personDo.getId());
+      form.setName(personDo.getName());
+      form.setBirthday(personDo.getBirthday());
+      model.addAttribute("person", form);
       return "person";
     } catch (final NoResultException e) {
       return "404";
     }
   }
 
-  @RequestMapping(value = "/{id}/friends", method = RequestMethod.GET)
-  public String getFriends(final Model model, @PathVariable
-  final Integer id) {
-    final List<? extends PersonDo> list = service.findFriends(id);
-    model.addAttribute("friendList", list);
-    return (list != null) ? "personFriends" : "404";
-  }
+  //  @RequestMapping(value = "/{id}/friends", method = RequestMethod.GET)
+  //  public String getFriends(final Model model, @PathVariable
+  //  final Integer id) {
+  //    final List<? extends PersonDo> list = service.findFriends(id);
+  //    model.addAttribute("friendList", list);
+  //    return (list != null) ? "personFriends" : "404";
+  //  }
 
   private boolean isValidResult(final String result) {
     return isOkResult(result) || isNokResult(result);

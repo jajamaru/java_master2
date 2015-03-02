@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,20 +10,26 @@
 <title><spring:message code="title.person" /></title>
 </head>
 <body>
-	<article class="person">
-		<header>
-			<c:out value="${person.id}" />
-		</header>
-		<table>
-			<tr>
-				<th><spring:message code="person.name" /></th>
-				<td><c:out value="${person.name}" /></td>
-			</tr>
-			<tr>
-				<th><spring:message code="person.birthday" /></th>
-				<td><c:out value="${person.birthday}" /></td>
-			</tr>
-		</table>
-	</article>
+	<form:form _method="POST" commandName="person">
+		<input type="hidden" name="_method" value="put" />
+		<form:errors path="*" element="div" />
+		<div class="form">
+			<form:label path="name">
+				<spring:message code="form.person.name" />
+			</form:label>
+			<form:input path="name" />
+			<span class="form-error"><form:errors path="name" /></span>
+		</div>
+		<div class="form">
+			<form:label path="birthday">
+				<spring:message code="form.person.birthday" />
+			</form:label>
+			<form:input path="birthday" />
+			<span class="form-error"><form:errors path="birthday" /></span>
+		</div>
+		<div class="form">
+			<input type="submit" value="Update" />
+		</div>
+	</form:form>
 </body>
 </html>

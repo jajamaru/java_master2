@@ -30,7 +30,7 @@ public class PersonDeleteController {
   @RequestMapping(method = RequestMethod.DELETE)
   public String deleteListPerson(final Model model) {
     service.deleteAllPerson();
-    return "redirect:persons";
+    return "redirect:/persons";
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -38,7 +38,7 @@ public class PersonDeleteController {
   final Integer id) {
     try {
       service.deletePerson(id);
-      return "redirect:persons";
+      return "redirect:/persons";
     } catch (final NoResultException e) {
       return "404";
     }
