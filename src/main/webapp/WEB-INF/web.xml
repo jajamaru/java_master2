@@ -24,11 +24,13 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+	<!-- On active un filtre pour utiliser pleinement les url de type rest -->
 	<filter>
 		<filter-name>hiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 	</filter>
 
+	<!-- Puis on applique ce filtre sur notre servlet de base -->
 	<filter-mapping>
 		<filter-name>hiddenHttpMethodFilter</filter-name>
 		<servlet-name>servlet-dispatcher</servlet-name>
