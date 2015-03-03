@@ -4,12 +4,16 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,12 +37,51 @@ public class PersonDo {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(name = "name")
+  @Column(name = "name", nullable = false)
   private String  name;
 
   @Temporal(TemporalType.DATE)
   @Column(name = "birthday")
   private Date    birthday;
+  
+  @JoinTable(name = "friend", joinColumns = {
+      @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false)},
+      inverseJoinColumns = {
+      @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false)}
+  )
+  @ManyToMany
+  private List<PersonDo> friends;
+  
+  @ManyToMany(mappedBy = "friends")
+  private List<PersonDo> friendsWith;
+
+  /**
+   * @return the friendsWith
+   */
+  public List<PersonDo> getFriendsWith() {
+    return friendsWith;
+  }
+
+  /**
+   * @param friendsWith the friendsWith to set
+   */
+  public void setFriendsWith(final List<PersonDo> friendsWith) {
+    this.friendsWith = friendsWith;
+  }
+
+  /**
+   * @return the friends
+   */
+  public List<PersonDo> getFriends() {
+    return friends;
+  }
+
+  /**
+   * @param friends the friends to set
+   */
+  public void setFriends(final List<PersonDo> friends) {
+    this.friends = friends;
+  }
 
   /**
    * @return the id

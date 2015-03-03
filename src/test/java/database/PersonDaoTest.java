@@ -6,6 +6,9 @@ package database;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import junit.framework.Assert;
@@ -43,12 +46,32 @@ public class PersonDaoTest {
 
   @Test
   public void findAll() {
-    Assert.assertEquals(dao.findAll().size(), 3);
+    Assert.assertEquals(dao.findAll().size(), 4);
   }
 
   @Test
   public void find() {
     Assert.assertNotNull(dao.find(1));
+    Assert.assertNotNull(dao.find(1).getFriends());
+    Assert.assertNotNull(dao.find(1).getFriendsWith());
+  }
+
+  @Test
+  public void findFriends() {
+    Assert.assertEquals(dao.findFriends(1).size(), 2);
+
+    final List<PersonDo> list = dao.findFriends(2);
+    Assert.assertEquals(list.size(), 2);
+
+    final List<Integer> array = new ArrayList<Integer>();
+    for (final Iterator<PersonDo> it = list.iterator(); it.hasNext();) {
+      array.add(it.next().getId());
+    }
+    Assert.assertTrue(array.contains(1));
+    Assert.assertTrue(array.contains(4));
+
+    Assert.assertEquals(dao.findFriends(4).size(), 1);
+    Assert.assertEquals(dao.findFriends(3).size(), 1);
   }
 
   @Test
@@ -66,22 +89,23 @@ public class PersonDaoTest {
   @Test
   public void delete() {
     Assert.assertNotNull(dao.delete(1));
+    Assert.assertEquals(dao.findFriends(2).size(), 1);
   }
 
   @Test
   public void deleteAll() {
-    Assert.assertEquals(3, dao.deleteAll());
+    Assert.assertEquals(dao.deleteAll(), 4);
   }
 
   @Test
   public void create() throws ParseException {
     final PersonDo person = new PersonDo();
     person.setName("New");
-    DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    final DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
     person.setBirthday(sdf.parse("01/01/2014"));
     System.out.println(person.getBirthday());
     dao.create(person);
-    Assert.assertEquals(dao.findAll().size(), 4);
+    Assert.assertEquals(dao.findAll().size(), 5);
   }
 
 }

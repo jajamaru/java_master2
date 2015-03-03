@@ -13,6 +13,6 @@ import entity.PersonDo;
  */
 public abstract class IPersonDao extends IDao<PersonDo> {
 
-  public abstract List<? extends PersonDo> findFriends(final Integer id);
+  public abstract List<PersonDo> findFriends(final Integer id);
 
 }
