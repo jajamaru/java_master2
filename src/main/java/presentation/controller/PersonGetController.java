@@ -3,11 +3,15 @@
  */
 package presentation.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import presentation.dto.PersonDto;
+import presentation.dto.json.PersonJson;
 import presentation.dto.xml.PersonListXml;
 import presentation.dto.xml.PersonXml;
 import presentation.model.PersonForm;
@@ -44,9 +48,11 @@ public class PersonGetController {
 
   @ResponseBody
   @RequestMapping(value = "/json", method = RequestMethod.GET)
-  public PersonDto[] getListPersonWithReturnTypeJson() {
+  public String getListPersonWithReturnTypeJson() throws JsonGenerationException,
+      JsonMappingException, IOException {
     final List<? extends PersonDo> list = service.findAllPerson();
-    return getPersonInJson(list);
+    final ObjectMapper mapper = new ObjectMapper();
+    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getPersonInJson(list));
   }
 
   @ResponseBody
@@ -56,19 +62,19 @@ public class PersonGetController {
     return getPersonInXml(list);
   }
 
-  @RequestMapping(value = "?result={result}", method = RequestMethod.GET)
-  public String getListPersonWithRequestFeedback(final Model model, @PathVariable
-  final String result) {
-    model.addAttribute("personList", service.findAllPerson());
-    if (isValidResult(result)) {
-      if (isOkResult(result)) {
-        model.addAttribute("result", "OK");
-      } else {
-        model.addAttribute("result", "NOK");
-      }
-    }
-    return "personList";
-  }
+  //  @RequestMapping(value = "?result={result}", method = RequestMethod.GET)
+  //  public String getListPersonWithRequestFeedback(final Model model, @PathVariable
+  //  final String result) {
+  //    model.addAttribute("personList", service.findAllPerson());
+  //    if (isValidResult(result)) {
+  //      if (isOkResult(result)) {
+  //        model.addAttribute("result", "OK");
+  //      } else {
+  //        model.addAttribute("result", "NOK");
+  //      }
+  //    }
+  //    return "personList";
+  //  }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public String getSinglePerson(final Model model, @PathVariable
@@ -94,16 +100,16 @@ public class PersonGetController {
   //    return (list != null) ? "personFriends" : "404";
   //  }
 
-  private PersonDto[] getPersonInJson(final List<? extends PersonDo> list) {
-    final List<PersonDto> tab = new ArrayList<PersonDto>();
+  private PersonJson[] getPersonInJson(final List<? extends PersonDo> list) {
+    final List<PersonJson> tab = new ArrayList<PersonJson>();
     for (PersonDo person : list) {
-      final PersonDto dto = new PersonDto();
-      dto.setId(person.getId());
-      dto.setName(person.getName());
-      dto.setBirthday(person.getBirthday());
-      tab.add(dto);
+      final PersonJson json = new PersonJson();
+      json.setId(person.getId());
+      json.setName(person.getName());
+      json.setBirthday(person.getBirthday());
+      tab.add(json);
     }
-    final PersonDto[] tabDto = new PersonDto[tab.size()];
+    final PersonJson[] tabDto = new PersonJson[tab.size()];
     tab.toArray(tabDto);
     return tabDto;
   }

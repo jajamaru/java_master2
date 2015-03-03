@@ -17,12 +17,12 @@ public class XmlDateAdapter extends XmlAdapter<String, Date> {
   private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
   @Override
-  public String marshal(Date date) throws Exception {
+  public String marshal(final Date date) throws Exception {
     return dateFormat.format(date);
   }
 
   @Override
-  public Date unmarshal(String date) throws Exception {
+  public Date unmarshal(final String date) throws Exception {
     return dateFormat.parse(date);
   }
 
