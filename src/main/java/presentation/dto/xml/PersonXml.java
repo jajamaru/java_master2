@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author romain
@@ -54,6 +55,7 @@ public class PersonXml {
    * @return the birthday
    */
   @XmlElement
+  @XmlJavaTypeAdapter(XmlDateAdapter.class)
   public Date getBirthday() {
     return birthday;
   }
