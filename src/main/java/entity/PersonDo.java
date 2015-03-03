@@ -6,6 +6,7 @@ package entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,10 +50,10 @@ public class PersonDo {
       inverseJoinColumns = {
       @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false)}
   )
-  @ManyToMany
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private List<PersonDo> friends;
   
-  @ManyToMany(mappedBy = "friends")
+  @ManyToMany(mappedBy = "friends", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   private List<PersonDo> friendsWith;
 
   /**
