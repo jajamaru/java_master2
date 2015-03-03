@@ -28,7 +28,7 @@
 			<span class="form-error"><form:errors path="birthday" /></span>
 		</div>
 		<div class="form">
-			<input type="submit" value="Update" />
+			<input type="submit" value="<spring:message code="submit.update" />" />
 		</div>
 	</form:form>
 </body>
