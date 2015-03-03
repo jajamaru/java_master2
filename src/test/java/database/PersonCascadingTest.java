@@ -70,4 +70,21 @@ public class PersonCascadingTest {
 
     Assert.assertEquals(dao.findAll().size(), 8);
   }
+  
+  @Test
+  public void deleteSinglePerson() {
+    Assert.assertEquals(dao.findAll().size(), 4);
+    dao.delete(1);
+    Assert.assertEquals(dao.findAll().size(), 3);
+  }
+  
+  @Test
+  public void updateCascading() {
+    final PersonDo p3 = dao.find(3);
+    final PersonDo p1 = p3.getFriendsWith().get(0);
+    p1.setName("abcd");
+    
+    dao.update(p3);
+    Assert.assertEquals(dao.find(1).getName(), "abcd");
+  }
 }
