@@ -36,7 +36,7 @@ public class PersonDo {
   @Column(name = "name")
   private String  name;
 
-  @Temporal(TemporalType.TIMESTAMP)
+  @Temporal(TemporalType.DATE)
   @Column(name = "birthday")
   private Date    birthday;
 
