@@ -4,22 +4,51 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ attribute name="person" required="true" type="entity.PersonDo" %>
+<%@ attribute name="person" required="true" type="presentation.dto.PersonDto" %>
 
 <article class="person">
 	<header>
 		<c:out value="${person.id}" />
 	</header>
 	<table>
-		<tr>
-			<th><spring:message code="person.name" /></th>
-			<td><c:out value="${person.name}" /></td>
-		</tr>
-		<tr>
-			<th><spring:message code="person.birthday" /></th>
-			<td><fmt:formatDate value="${person.birthday}"
-					pattern="dd/MM/yyyy" /></td>
-		</tr>
+		<caption><spring:message code="person.caption.private" /></caption>
+		<thead>
+			<tr>
+				<th><spring:message code="person.name" /></th>
+				<th><spring:message code="person.birthday" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><c:out value="${person.name}" /></td>
+				<td><fmt:formatDate value="${person.birthday}"
+						pattern="dd/MM/yyyy" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<caption><spring:message code="person.caption.friend" /></caption>
+		<thead>
+			<tr>
+				<th><spring:message code="person.friendId" /></th>
+				<th><spring:message code="person.friendToDelete" /></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="f" items="${person.friends}">
+				<tr>
+					<td><c:out value="${f.id}" /></td>
+					<td>
+						<form:form action="/persons/${person.id}/friends/${f.id}" _method="POST">
+							<input type="hidden" name="_method" value="delete" />
+							<div class="form">
+								<input type="submit" value="<spring:message code="submit.delete" />" />
+							</div>
+						</form:form>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 	<footer>
 		<form:form action="/persons/${person.id}" _method="POST" >

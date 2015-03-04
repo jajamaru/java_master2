@@ -46,7 +46,7 @@ public class PersonDaoTest {
 
   @Test
   public void findAll() {
-    Assert.assertEquals(dao.findAll().size(), 4);
+    Assert.assertEquals(dao.findAll().size(), 5);
   }
 
   @Test
@@ -94,7 +94,7 @@ public class PersonDaoTest {
 
   @Test
   public void deleteAll() {
-    Assert.assertEquals(dao.deleteAll(), 4);
+    Assert.assertEquals(dao.deleteAll(), 5);
   }
 
   @Test
@@ -105,7 +105,7 @@ public class PersonDaoTest {
     person.setBirthday(sdf.parse("01/01/2014"));
     System.out.println(person.getBirthday());
     dao.create(person);
-    Assert.assertEquals(dao.findAll().size(), 5);
+    Assert.assertEquals(dao.findAll().size(), 6);
   }
 
 }

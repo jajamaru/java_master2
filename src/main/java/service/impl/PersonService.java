@@ -3,7 +3,6 @@
  */
 package service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mapper.PersonMapper;
@@ -18,7 +17,6 @@ import presentation.dto.PersonDto;
 import service.IPersonService;
 import dao.IPersonDao;
 import entity.PersonDo;
-import exception.FriendsNotFoundException;
 
 /**
  * @author Romain
@@ -62,8 +60,8 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findPerson(int)
    */
   @Override
-  public PersonDo findPerson(final int id) {
-    return dao.find(id);
+  public PersonDto findPerson(final int id) {
+    return PersonMapper.convertDotoDto(dao.find(id));
 
   }
 
@@ -79,21 +77,8 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findAllPerson()
    */
   @Override
-  public List<? extends PersonDo> findAllPerson() {
-    return dao.findAll();
-  }
-
-  /* (non-Javadoc)
-   * @see service.IPersonService#findFriends()
-   */
-  @Override
-  public List<? extends PersonDo> findFriends(final Integer id) throws FriendsNotFoundException{
-    final PersonDo person = dao.find(id);
-    final List<PersonDo> list = new ArrayList<PersonDo>();
-    if (person != null) {
-      //TODO Récupérer les amis de la personne
-    }
-    return list;
+  public List<PersonDto> findAllPerson() {
+    return PersonMapper.convertDotoDto(dao.findAll());
   }
 
 }

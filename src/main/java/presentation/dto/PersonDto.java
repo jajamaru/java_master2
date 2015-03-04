@@ -4,6 +4,7 @@
 package presentation.dto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author romain
@@ -11,9 +12,24 @@ import java.util.Date;
  */
 public class PersonDto {
 
-  private Integer id;
-  private String  name;
-  private Date    birthday;
+  private Integer         id;
+  private String          name;
+  private Date            birthday;
+  private List<PersonDto> friends;
+
+  /**
+   * @return the friends
+   */
+  public List<PersonDto> getFriends() {
+    return friends;
+  }
+
+  /**
+   * @param friends the friends to set
+   */
+  public void setFriends(final List<PersonDto> friends) {
+    this.friends = friends;
+  }
 
   /**
    * @return the id
@@ -55,6 +71,58 @@ public class PersonDto {
    */
   public void setBirthday(final Date birthday) {
     this.birthday = birthday;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    return result;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final PersonDto other = (PersonDto) obj;
+    if (birthday == null) {
+      if (other.birthday != null) {
+        return false;
+      }
+    } else if (!birthday.equals(other.birthday)) {
+      return false;
+    }
+    if (id == null) {
+      if (other.id != null) {
+        return false;
+      }
+    } else if (!id.equals(other.id)) {
+      return false;
+    }
+    if (name == null) {
+      if (other.name != null) {
+        return false;
+      }
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
+    return true;
   }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import presentation.dto.PersonDto;
 import service.IPersonService;
-import entity.PersonDo;
 
 /**
  * @author romain
@@ -40,12 +39,25 @@ public class PersonServiceTest {
 
   @Test
   public void findAll() {
-    Assert.assertEquals(service.findAllPerson().size(), 3);
+    Assert.assertEquals(service.findAllPerson().size(), 5);
   }
 
   @Test
   public void find() {
     Assert.assertNotNull(service.findPerson(1));
+    Assert.assertNotNull(service.findPerson(1).getFriends());
+    Assert.assertEquals(service.findPerson(1).getFriends().size(), 2);
+
+    Assert.assertNotNull(service.findPerson(2));
+    Assert.assertNotNull(service.findPerson(2).getFriends());
+    Assert.assertEquals(service.findPerson(2).getFriends().size(), 2);
+
+    Assert.assertNotNull(service.findPerson(3));
+    Assert.assertNotNull(service.findPerson(3).getFriends());
+    Assert.assertEquals(service.findPerson(3).getFriends().size(), 1);
+
+    Assert.assertNotNull(service.findPerson(5));
+    Assert.assertEquals(service.findPerson(5).getFriends().size(), 0);
   }
 
   @Test
@@ -54,26 +66,19 @@ public class PersonServiceTest {
     dto.setName("truc");
     dto.setBirthday(Date.valueOf("2003-01-01"));
     service.createPerson(dto);
-    Assert.assertEquals(service.findAllPerson().size(), 4);
+    Assert.assertEquals(service.findAllPerson().size(), 6);
   }
 
   @Test
-  public void update() {
+  public void updateSinglePerson() {
     final String name = "abcd";
-    PersonDo person = service.findPerson(1);
-
-    // On récupère le do popur le convertir en dto
-    final PersonDto dto = new PersonDto();
-    dto.setId(person.getId());
-    dto.setName(person.getName());
-    dto.setBirthday(person.getBirthday());
-
-    // On change le champs name du dto
+    PersonDto dto = service.findPerson(1);
     dto.setName(name);
+
     service.updatePerson(dto);
 
-    person = service.findPerson(1);
-    Assert.assertEquals(name, person.getName());
+    dto = service.findPerson(1);
+    Assert.assertEquals(name, dto.getName());
   }
 
   @Test
@@ -83,7 +88,7 @@ public class PersonServiceTest {
 
   @Test
   public void deleteAll() {
-    Assert.assertEquals(3, service.deleteAllPerson());
+    Assert.assertEquals(5, service.deleteAllPerson());
   }
 
 }

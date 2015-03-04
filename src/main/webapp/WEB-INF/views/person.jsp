@@ -31,5 +31,26 @@
 			<input type="submit" value="<spring:message code="submit.update" />" />
 		</div>
 	</form:form>
+	
+	<form:form _method="POST" commandName="friend">
+		<form:errors path="*" element="div" />
+		<div class="form">
+			<form:label path="name">
+				<spring:message code="form.person.name" />
+			</form:label>
+			<form:input path="name" />
+			<span class="form-error"><form:errors path="name" /></span>
+		</div>
+		<div class="form">
+			<form:label path="birthday">
+				<spring:message code="form.person.birthday" />
+			</form:label>
+			<form:input path="birthday" />
+			<span class="form-error"><form:errors path="birthday" /></span>
+		</div>
+		<div class="form">
+			<input type="submit" value="<spring:message code="submit.update" />" />
+		</div>
+	</form:form>
 </body>
 </html>

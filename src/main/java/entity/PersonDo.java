@@ -31,29 +31,26 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "PersonDo.find", query = "SELECT p from PersonDo p where p.id = :id"),
     @NamedQuery(name = "PersonDo.findAll", query = "SELECT p FROM PersonDo p"),
     @NamedQuery(name = "PersonDo.delete", query = "DELETE FROM PersonDo WHERE id = :id"),
-    @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo")})
+    @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo") })
 public class PersonDo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
+  private Integer        id;
 
   @Column(name = "name", nullable = false)
-  private String  name;
+  private String         name;
 
   @Temporal(TemporalType.DATE)
   @Column(name = "birthday")
-  private Date    birthday;
-  
-  @JoinTable(name = "friend", joinColumns = {
-      @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false)},
-      inverseJoinColumns = {
-      @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false)}
-  )
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  private Date           birthday;
+
+  @JoinTable(name = "friend", joinColumns = { @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false) })
+  @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
   private List<PersonDo> friends;
-  
-  @ManyToMany(mappedBy = "friends", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+
+  @ManyToMany(mappedBy = "friends", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+      CascadeType.REFRESH })
   private List<PersonDo> friendsWith;
 
   /**
@@ -124,6 +121,58 @@ public class PersonDo {
    */
   public void setBirthday(final Date birthday) {
     this.birthday = birthday;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    return result;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final PersonDo other = (PersonDo) obj;
+    if (birthday == null) {
+      if (other.birthday != null) {
+        return false;
+      }
+    } else if (!birthday.equals(other.birthday)) {
+      return false;
+    }
+    if (id == null) {
+      if (other.id != null) {
+        return false;
+      }
+    } else if (!id.equals(other.id)) {
+      return false;
+    }
+    if (name == null) {
+      if (other.name != null) {
+        return false;
+      }
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
+    return true;
   }
 
 }

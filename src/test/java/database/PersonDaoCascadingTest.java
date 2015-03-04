@@ -31,7 +31,7 @@ import entity.PersonDo;
 @ContextConfiguration("classpath:configTest/PersonDaoTest-context.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class PersonCascadingTest {
+public class PersonDaoCascadingTest {
 
   @Autowired
   @Qualifier("personDao")
@@ -68,14 +68,14 @@ public class PersonCascadingTest {
 
     dao.create(p1);
 
-    Assert.assertEquals(dao.findAll().size(), 8);
+    Assert.assertEquals(dao.findAll().size(), 9);
   }
   
   @Test
   public void deleteSinglePerson() {
-    Assert.assertEquals(dao.findAll().size(), 4);
+    Assert.assertEquals(dao.findAll().size(), 5);
     dao.delete(1);
-    Assert.assertEquals(dao.findAll().size(), 3);
+    Assert.assertEquals(dao.findAll().size(), 4);
   }
   
   @Test
