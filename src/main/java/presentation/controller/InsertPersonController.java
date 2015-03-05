@@ -44,12 +44,11 @@ public class InsertPersonController {
   @ModelAttribute("person")
   final PersonForm form, final BindingResult result, final ModelMap model) {
     if (result.hasErrors()) {
-      model.addAttribute("result", "NOK");
+      return "formPerson";
     } else {
       _persistPerson(form);
-      model.addAttribute("result", "OK");
+      return "redirect:/persons";
     }
-    return "redirect:/persons";
   }
 
   private void _persistPerson(final PersonForm form) {
