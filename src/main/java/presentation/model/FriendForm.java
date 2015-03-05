@@ -14,6 +14,9 @@ import javax.validation.Valid;
 public class FriendForm {
 
   @Valid
+  private PersonForm   person;
+
+  @Valid
   private List<Friend> friends;
 
   /**
@@ -28,6 +31,20 @@ public class FriendForm {
    */
   public void setFriends(final List<Friend> friends) {
     this.friends = friends;
+  }
+
+  /**
+   * @return the person
+   */
+  public PersonForm getPerson() {
+    return person;
+  }
+
+  /**
+   * @param person the person to set
+   */
+  public void setPerson(final PersonForm person) {
+    this.person = person;
   }
 
 }

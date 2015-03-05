@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 import presentation.dto.PersonDto;
+import presentation.model.Friend;
+import presentation.model.FriendForm;
 import presentation.model.PersonForm;
 import entity.PersonDo;
 
@@ -159,11 +161,38 @@ public class PersonMapper {
    * @param form to convert
    * @return PersonDto object
    */
-  public static PersonDto convertFormToDto(final PersonForm form) {
+  public static PersonDto convertPersonFormToDto(final PersonForm form) {
     final PersonDto dto = new PersonDto();
     dto.setId(form.getId());
     dto.setName(form.getName());
     dto.setBirthday(form.getBirthday());
+    return dto;
+  }
+
+  public static PersonDto convertFriendFormToDto(final FriendForm form) {
+    final PersonDto dto = new PersonDto();
+    dto.setBirthday(form.getPerson().getBirthday());
+    dto.setId(form.getPerson().getId());
+    dto.setName(form.getPerson().getName());
+
+    final List<PersonDto> newFriends = new ArrayList<PersonDto>();
+    final List<Friend> friends = form.getFriends();
+    for (final Iterator<Friend> it = friends.iterator(); it.hasNext();) {
+      final Friend f = it.next();
+      if (f.isFriendShip()) {
+        newFriends.add(_convertFriendToDto(f));
+      }
+    }
+
+    dto.setFriends(newFriends);
+    return dto;
+  }
+
+  private static PersonDto _convertFriendToDto(final Friend form) {
+    final PersonDto dto = new PersonDto();
+    dto.setName(form.getPerson().getName());
+    dto.setBirthday(form.getPerson().getBirthday());
+    dto.setId(form.getPerson().getId());
     return dto;
   }
 

@@ -59,7 +59,7 @@ public class PersonTestController {
   }
 
   private void persistPerson(final PersonForm form) {
-    service.createPerson(PersonMapper.convertFormToDto(form));
+    service.createPerson(PersonMapper.convertPersonFormToDto(form));
   }
 
   //  @InitBinder

@@ -26,7 +26,7 @@ import service.IPersonService;
  */
 @Controller
 @RequestMapping("/persons")
-public class PersonPostController {
+public class InsertPersonController {
 
   @Autowired
   @Qualifier("personService")
@@ -46,21 +46,14 @@ public class PersonPostController {
     if (result.hasErrors()) {
       model.addAttribute("result", "NOK");
     } else {
-      persistPerson(form);
+      _persistPerson(form);
       model.addAttribute("result", "OK");
     }
     return "redirect:/persons";
   }
 
-  private void persistPerson(final PersonForm form) {
-    service.createPerson(PersonMapper.convertFormToDto(form));
+  private void _persistPerson(final PersonForm form) {
+    service.createPerson(PersonMapper.convertPersonFormToDto(form));
   }
-
-  //  @RequestMapping(value = "/{id}/friends", method = RequestMethod.POST)
-  //  public String insertFriend(final Model model, @PathVariable
-  //  final Integer id) {
-  //
-  //    return "redrect:persons";
-  //  }
 
 }

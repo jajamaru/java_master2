@@ -31,32 +31,5 @@
 			<input type="submit" value="<spring:message code="submit.update" />" />
 		</div>
 	</form:form>
-
-	<form:form action="/persons/${person.id}/friends" method="POST"
-		commandName="friendList">
-		<form:errors path="*" element="div" />
-		<table>
-			<thead>
-				<tr>
-					<th>Amis</th>
-					<th>Id</th>
-					<th>Nom</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${friendList.friends}" varStatus="st">
-					<tr>
-						<td><form:checkbox path="friends[${st.index}].friendShip" /></td>
-						<td><form:input path="friends[${st.index}].person.id" /></td>
-						<td><form:input path="friends[${st.index}].person.name" /></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<div class="form">
-			<input type="submit"
-				value="<spring:message code="submit.addFriend" />" />
-		</div>
-	</form:form>
 </body>
 </html>
