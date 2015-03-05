@@ -3,9 +3,6 @@
  */
 package presentation.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +50,7 @@ public class PersonDeleteController {
   final Integer id) {
     try {
       final PersonDto dto = service.findPerson(id);
-      _deleteFriends(dto);
+      service.deleteAllFriends(dto);
       return "redirect:/persons";
     } catch (final NoResultException e) {
       return "404";
@@ -66,25 +63,12 @@ public class PersonDeleteController {
   final Integer idFriend) {
     try {
       final PersonDto dto = service.findPerson(id);
-      _deleteSingleFriend(dto, idFriend);
+      final PersonDto deleted = service.findPerson(idFriend);
+      service.deleteSingleFriend(dto, deleted);
       return "redirect:/persons";
     } catch (final NoResultException e) {
       return "404";
     }
-  }
-
-  private void _deleteFriends(final PersonDto dto) {
-    dto.setFriends(new ArrayList<PersonDto>());
-    service.updatePerson(dto);
-  }
-
-  private void _deleteSingleFriend(final PersonDto dto, final Integer id) throws NoResultException {
-    final List<PersonDto> friends = dto.getFriends();
-    final PersonDto f = service.findPerson(id);
-    if (friends.contains(f)) {
-      friends.remove(f);
-    }
-    service.updatePerson(dto);
   }
 
 }

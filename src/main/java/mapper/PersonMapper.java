@@ -198,6 +198,12 @@ public class PersonMapper {
 
 }
 
+/**
+ * @author romain
+ * This class use to break infinite recursion.
+ * @param <T> Instance of object to stock
+ * @param <U> Object already explored
+ */
 class MemoryPerson<T, U> {
 
   private Set<T> instance;

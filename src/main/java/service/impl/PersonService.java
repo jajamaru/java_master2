@@ -3,6 +3,7 @@
  */
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mapper.PersonMapper;
@@ -79,6 +80,28 @@ public class PersonService implements IPersonService {
   @Override
   public List<PersonDto> findAllPerson() {
     return PersonMapper.convertDotoDto(dao.findAll());
+  }
+
+  /* (non-Javadoc)
+   * @see service.IPersonService#deleteAllFriends(presentation.dto.PersonDto)
+   */
+  @Override
+  public int deleteAllFriends(final PersonDto person) {
+    final int nbFriendsDeleted = person.getFriends().size();
+    person.setFriends(new ArrayList<PersonDto>());
+    updatePerson(person);
+    return nbFriendsDeleted;
+  }
+
+  /* (non-Javadoc)
+   * @see service.IPersonService#deleteSingleFriend(presentation.dto.PersonDto, presentation.dto.PersonDto)
+   */
+  @Override
+  public boolean deleteSingleFriend(final PersonDto person, final PersonDto deleted) {
+    if (person.getFriends().contains(deleted)) {
+      return person.getFriends().remove(deleted);
+    }
+    return false;
   }
 
 }
