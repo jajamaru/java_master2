@@ -5,6 +5,7 @@ package presentation.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -25,6 +26,8 @@ import presentation.dto.PersonDto;
 import presentation.dto.json.PersonJson;
 import presentation.dto.xml.PersonListXml;
 import presentation.dto.xml.PersonXml;
+import presentation.model.Friend;
+import presentation.model.FriendForm;
 import presentation.model.PersonForm;
 import service.IPersonService;
 
@@ -67,8 +70,9 @@ public class PersonGetController {
   final Integer id) {
     try {
       final PersonDto dto = service.findPerson(id);
-      final PersonForm form = _createPersonForm(dto);
-      model.addAttribute("person", form);
+      final List<PersonDto> allPersons = service.findAllPerson();
+      model.addAttribute("person", _createPersonForm(dto));
+      model.addAttribute("friendList", _createFriendForm(dto, allPersons));
       return "person";
     } catch (final NoResultException e) {
       return "404";
@@ -119,4 +123,24 @@ public class PersonGetController {
     return form;
   }
 
+  private FriendForm _createFriendForm(final PersonDto refDto, final List<PersonDto> list) {
+    final FriendForm form = new FriendForm();
+    form.setFriends(_createListFriendForm(refDto, list));
+    return form;
+  }
+
+  private List<Friend> _createListFriendForm(final PersonDto refDto, final List<PersonDto> list) {
+    final List<Friend> form = new ArrayList<Friend>();
+    final List<PersonDto> friends = refDto.getFriends();
+    for (final Iterator<PersonDto> it = list.iterator(); it.hasNext();) {
+      final PersonDto person = it.next();
+      if (!person.equals(refDto)) {
+        final Friend newFriend = new Friend();
+        newFriend.setPerson(_createPersonForm(person));
+        newFriend.setFriendShip(friends.contains(person));
+        form.add(newFriend);
+      }
+    }
+    return form;
+  }
 }
