@@ -18,7 +18,6 @@ import presentation.dto.PersonDto;
 import service.IPersonService;
 import dao.IPersonDao;
 import entity.PersonDo;
-import exception.FriendsNotFoundException;
 
 /**
  * @author Romain
@@ -62,8 +61,8 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findPerson(int)
    */
   @Override
-  public PersonDo findPerson(final int id) {
-    return dao.find(id);
+  public PersonDto findPerson(final int id) {
+    return PersonMapper.convertDotoDto(dao.find(id));
 
   }
 
@@ -79,21 +78,30 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findAllPerson()
    */
   @Override
-  public List<? extends PersonDo> findAllPerson() {
-    return dao.findAll();
+  public List<PersonDto> findAllPerson() {
+    return PersonMapper.convertDotoDto(dao.findAll());
   }
 
   /* (non-Javadoc)
-   * @see service.IPersonService#findFriends()
+   * @see service.IPersonService#deleteAllFriends(presentation.dto.PersonDto)
    */
   @Override
-  public List<? extends PersonDo> findFriends(final Integer id) throws FriendsNotFoundException{
-    final PersonDo person = dao.find(id);
-    final List<PersonDo> list = new ArrayList<PersonDo>();
-    if (person != null) {
-      //TODO Récupérer les amis de la personne
+  public int deleteAllFriends(final PersonDto person) {
+    final int nbFriendsDeleted = person.getFriends().size();
+    person.setFriends(new ArrayList<PersonDto>());
+    updatePerson(person);
+    return nbFriendsDeleted;
+  }
+
+  /* (non-Javadoc)
+   * @see service.IPersonService#deleteSingleFriend(presentation.dto.PersonDto, presentation.dto.PersonDto)
+   */
+  @Override
+  public boolean deleteSingleFriend(final PersonDto person, final PersonDto deleted) {
+    if (person.getFriends().contains(deleted)) {
+      return person.getFriends().remove(deleted);
     }
-    return list;
+    return false;
   }
 
 }

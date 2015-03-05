@@ -3,6 +3,7 @@
  */
 package dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -85,9 +86,14 @@ public class PersonDao extends IPersonDao {
   }
 
   @Override
-  public List<? extends PersonDo> findFriends(final Integer id) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<PersonDo> findFriends(final Integer id) {
+    final PersonDo person = find(id);
+    final List<PersonDo> friends = person.getFriends();
+    final List<PersonDo> friendsWith = person.getFriendsWith();
+    final List<PersonDo> result = new ArrayList<PersonDo>();
+    result.addAll(friends);
+    result.addAll(friendsWith);
+    return result;
   }
 
 }
