@@ -8,7 +8,7 @@
 
 <article class="person">
 	<header>
-		<c:out value="${person.id}" />
+		<h2><c:out value="${person.id}" /></h2>
 	</header>
 	<table>
 		<caption><spring:message code="person.caption.private" /></caption>

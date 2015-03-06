@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="<c:url value="resources/css/home.css" />" rel="stylesheet" />
+<link href="<c:url value="resources/css/person.css" />" rel="stylesheet" />
+<link href="<c:url value="resources/css/form.css" />" rel="stylesheet" />
 </head>
 <body>
 	<h1>Entity is not existed !</h1>

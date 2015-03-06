@@ -1,0 +1,84 @@
+article.person {
+	border: 3px #ddd solid;
+	background-color: #fff;
+	
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 70%;
+}
+
+article.person header {
+	padding: 1em;
+	background-color: #ccc;
+	border-bottom: 1px #eee solid;
+}
+
+article.person header h2 {
+	font-size: 1.1em;
+	background-color: #ccc;
+	width: 100%;
+}
+
+article.person footer {
+	padding: 1em;;
+	background-color: #ccc;
+}
+
+article.person table {
+	background-color: #fff;
+	width: 100%;
+}
+
+
+article.person table caption {
+	text-align: left;
+	font-size: 1.1em;
+	
+	padding-left: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	
+	width: 100%
+}
+
+article.person table * input[type="submit"] {
+	background: none;
+	border: none;
+	
+	padding: 0.5em;
+	background-color: orange;
+	
+	-webkit-transition: width 1s ease;
+        -moz-transition: width 1s ease;
+         -ms-transition: width 1s ease;
+          -o-transition: width 1s ease;
+             transition: width 1s ease;
+}
+
+article.person table * input[type="submit"]:HOVER {
+	width: 40%;
+}
+
+article.person table * input[type="submit"]:ACTIVE {
+	position: relative;
+	top: 1px;
+}
+
+article.person table thead tr {
+	border-bottom: 2px #000 solid;
+}
+
+article.person table thead tr th {
+	background-color: gray;
+}
+
+article.person table tbody tr:nth-child(odd) {
+	background-color: #ccc;
+}
+
+article.person table tbody * td {
+	
+}
