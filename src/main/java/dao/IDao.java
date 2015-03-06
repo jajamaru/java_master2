@@ -20,9 +20,10 @@ public abstract class IDao<T> {
   }
 
   /**
-   * Find a <T> object by an id
+   * Find a <U> object by an id
+   * <U> must extend <T>
    * @param id Id of object
-   * @return <T> object
+   * @return <U> object
    */
   public abstract T find(final int id);
 
@@ -37,7 +38,7 @@ public abstract class IDao<T> {
    * @param obj Updating object
    * @return Number of updated object in database
    */
-  public abstract void update(final T obj);
+  public abstract <U extends T> void update(final U obj);
 
   /**
    * Delete a <T> object
@@ -56,6 +57,6 @@ public abstract class IDao<T> {
    * Create a <T> object in database
    * @param obj Creating object
    */
-  public abstract void create(final T obj);
+  public abstract <U extends T> void create(final U obj);
 
 }

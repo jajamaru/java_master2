@@ -6,9 +6,6 @@ package database;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import junit.framework.Assert;
@@ -23,6 +20,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.IPersonDao;
+import entity.FemmeDo;
+import entity.HommeDo;
 import entity.PersonDo;
 
 /**
@@ -30,7 +29,7 @@ import entity.PersonDo;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:configTest/PersonDaoTest-context.xml")
+@ContextConfiguration("classpath:configTest/application-context-test.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class PersonDaoTest {
@@ -51,27 +50,11 @@ public class PersonDaoTest {
 
   @Test
   public void find() {
-    Assert.assertNotNull(dao.find(1));
-    Assert.assertNotNull(dao.find(1).getFriends());
-    Assert.assertNotNull(dao.find(1).getFriendsWith());
-  }
-
-  @Test
-  public void findFriends() {
-    Assert.assertEquals(dao.findFriends(1).size(), 2);
-
-    final List<PersonDo> list = dao.findFriends(2);
-    Assert.assertEquals(list.size(), 2);
-
-    final List<Integer> array = new ArrayList<Integer>();
-    for (final Iterator<PersonDo> it = list.iterator(); it.hasNext();) {
-      array.add(it.next().getId());
-    }
-    Assert.assertTrue(array.contains(1));
-    Assert.assertTrue(array.contains(4));
-
-    Assert.assertEquals(dao.findFriends(4).size(), 1);
-    Assert.assertEquals(dao.findFriends(3).size(), 1);
+    PersonDo person = dao.find(1);
+    Assert.assertNotNull(person);
+    Assert.assertNotNull(person.getFriends());
+    Assert.assertNotNull(person.getFriendsWith());
+    Assert.assertEquals(person.getSexe(), "H");
   }
 
   @Test
@@ -89,7 +72,7 @@ public class PersonDaoTest {
   @Test
   public void delete() {
     Assert.assertNotNull(dao.delete(1));
-    Assert.assertEquals(dao.findFriends(2).size(), 1);
+    Assert.assertEquals(dao.find(2).getFriends().size(), 1);
   }
 
   @Test
@@ -98,13 +81,26 @@ public class PersonDaoTest {
   }
 
   @Test
-  public void create() throws ParseException {
-    final PersonDo person = new PersonDo();
-    person.setName("New");
+  public void createHomme() throws ParseException {
     final DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    final PersonDo person = new HommeDo();
+    person.setName("homme");
     person.setBirthday(sdf.parse("01/01/2014"));
-    System.out.println(person.getBirthday());
+
     dao.create(person);
+
+    Assert.assertEquals(dao.findAll().size(), 6);
+  }
+
+  @Test
+  public void createFemme() throws ParseException {
+    final DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    final PersonDo person = new FemmeDo();
+    person.setName("femme");
+    person.setBirthday(sdf.parse("01/01/2014"));
+
+    dao.create(person);
+
     Assert.assertEquals(dao.findAll().size(), 6);
   }
 

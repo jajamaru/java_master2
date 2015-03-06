@@ -8,10 +8,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,13 +30,15 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "sexe", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "PERSON")
 @NamedQueries({
     @NamedQuery(name = "PersonDo.find", query = "SELECT p from PersonDo p where p.id = :id"),
     @NamedQuery(name = "PersonDo.findAll", query = "SELECT p FROM PersonDo p"),
     @NamedQuery(name = "PersonDo.delete", query = "DELETE FROM PersonDo WHERE id = :id"),
     @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo") })
-public class PersonDo {
+public abstract class PersonDo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,6 +51,9 @@ public class PersonDo {
   @Column(name = "birthday")
   private Date           birthday;
 
+  @Column(name = "sexe", insertable = false, updatable = false, nullable = false)
+  private String         sexe;
+
   @JoinTable(name = "friend", joinColumns = { @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false) })
   @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
   private List<PersonDo> friends;
@@ -52,6 +61,20 @@ public class PersonDo {
   @ManyToMany(mappedBy = "friends", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
       CascadeType.REFRESH })
   private List<PersonDo> friendsWith;
+
+  /**
+   * @return the sexe
+   */
+  public String getSexe() {
+    return sexe;
+  }
+
+  /**
+   * @param sexe the sexe to set
+   */
+  public void setSexe(final String sexe) {
+    this.sexe = sexe;
+  }
 
   /**
    * @return the friendsWith
@@ -173,6 +196,15 @@ public class PersonDo {
       return false;
     }
     return true;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "PersonDo [id=" + id + ", name=" + name + ", birthday=" + birthday + ", sexe=" + sexe
+        + ", friends=" + friends + ", friendsWith=" + friendsWith + "]";
   }
 
 }

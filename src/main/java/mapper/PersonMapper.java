@@ -13,6 +13,8 @@ import presentation.dto.PersonDto;
 import presentation.model.Friend;
 import presentation.model.FriendForm;
 import presentation.model.PersonForm;
+import entity.FemmeDo;
+import entity.HommeDo;
 import entity.PersonDo;
 
 /**
@@ -70,11 +72,28 @@ public class PersonMapper {
    * @return
    */
   private static PersonDo _createDo(final PersonDto dto) {
-    final PersonDo personDo = new PersonDo();
-    personDo.setBirthday(dto.getBirthday());
-    personDo.setName(dto.getName());
-    personDo.setId(dto.getId());
-    return personDo;
+    if ("H".equals(dto.getSexe())) {
+      return _createHommeDo(dto);
+    } else if ("F".equals(dto.getSexe())) {
+      return _createFemmeDo(dto);
+    }
+    return null;
+  }
+
+  private static HommeDo _createHommeDo(final PersonDto dto) {
+    HommeDo homme = new HommeDo();
+    homme.setBirthday(dto.getBirthday());
+    homme.setName(dto.getName());
+    homme.setId(dto.getId());
+    return homme;
+  }
+
+  private static FemmeDo _createFemmeDo(final PersonDto dto) {
+    FemmeDo femme = new FemmeDo();
+    femme.setBirthday(dto.getBirthday());
+    femme.setName(dto.getName());
+    femme.setId(dto.getId());
+    return femme;
   }
 
   /**
@@ -86,6 +105,7 @@ public class PersonMapper {
     dto.setBirthday(person.getBirthday());
     dto.setName(person.getName());
     dto.setId(person.getId());
+    dto.setSexe(person.getSexe());
     return dto;
   }
 

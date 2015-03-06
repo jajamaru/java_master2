@@ -15,7 +15,22 @@ public class PersonDto {
   private Integer         id;
   private String          name;
   private Date            birthday;
+  private String          sexe;
   private List<PersonDto> friends;
+
+  /**
+   * @return the sexe
+   */
+  public String getSexe() {
+    return sexe;
+  }
+
+  /**
+   * @param sexe the sexe to set
+   */
+  public void setSexe(final String sexe) {
+    this.sexe = sexe;
+  }
 
   /**
    * @return the friends

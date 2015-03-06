@@ -19,7 +19,24 @@ public class PersonXml {
 
   private String  name;
 
+  private String  sexe;
+
   private Date    birthday;
+
+  /**
+   * @return the sexe
+   */
+  @XmlAttribute
+  public String getSexe() {
+    return sexe;
+  }
+
+  /**
+   * @param sexe the sexe to set
+   */
+  public void setSexe(final String sexe) {
+    this.sexe = sexe;
+  }
 
   /**
    * @return the id

@@ -3,7 +3,6 @@
  */
 package dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -34,7 +33,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public PersonDo find(final int id) {
-    final TypedQuery<PersonDo> query = entityManager.createNamedQuery("PersonDo.find",
+    final TypedQuery<? extends PersonDo> query = entityManager.createNamedQuery("PersonDo.find",
         PersonDo.class);
     query.setParameter("id", id);
     return query.getSingleResult();
@@ -81,19 +80,8 @@ public class PersonDao extends IPersonDao {
    * @see dao.IDao#create(java.lang.Object)
    */
   @Override
-  public void create(final PersonDo obj) {
+  public <U extends PersonDo> void create(final U obj) {
     entityManager.persist(obj);
-  }
-
-  @Override
-  public List<PersonDo> findFriends(final Integer id) {
-    final PersonDo person = find(id);
-    final List<PersonDo> friends = person.getFriends();
-    final List<PersonDo> friendsWith = person.getFriendsWith();
-    final List<PersonDo> result = new ArrayList<PersonDo>();
-    result.addAll(friends);
-    result.addAll(friendsWith);
-    return result;
   }
 
 }

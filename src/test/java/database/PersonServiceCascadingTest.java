@@ -28,7 +28,7 @@ import service.IPersonService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:configTest/PersonDaoTest-context.xml")
+@ContextConfiguration("classpath:configTest/application-context-test.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class PersonServiceCascadingTest {
@@ -59,18 +59,22 @@ public class PersonServiceCascadingTest {
     final PersonDto p1 = new PersonDto();
     p1.setName("p1");
     p1.setBirthday(sdf.parse("01/01/2014"));
+    p1.setSexe("H");
 
     final PersonDto p2 = new PersonDto();
     p2.setName("p2");
     p2.setBirthday(sdf.parse("02/02/2014"));
+    p2.setSexe("F");
 
     final PersonDto p3 = new PersonDto();
     p3.setName("p3");
     p3.setBirthday(sdf.parse("03/03/2014"));
+    p3.setSexe("H");
 
     final PersonDto p4 = new PersonDto();
     p4.setName("p4");
     p4.setBirthday(sdf.parse("04/04/2014"));
+    p4.setSexe("F");
 
     p2.setFriends(Arrays.asList(p3, p4));
     p1.setFriends(Arrays.asList(p2));

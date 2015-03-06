@@ -23,7 +23,7 @@ import service.IPersonService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:configTest/PersonDaoTest-context.xml")
+@ContextConfiguration("classpath:configTest/application-context-test.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class PersonServiceTest {
@@ -47,17 +47,21 @@ public class PersonServiceTest {
     Assert.assertNotNull(service.findPerson(1));
     Assert.assertNotNull(service.findPerson(1).getFriends());
     Assert.assertEquals(service.findPerson(1).getFriends().size(), 2);
+    Assert.assertEquals(service.findPerson(1).getSexe(), "H");
 
     Assert.assertNotNull(service.findPerson(2));
     Assert.assertNotNull(service.findPerson(2).getFriends());
     Assert.assertEquals(service.findPerson(2).getFriends().size(), 2);
+    Assert.assertEquals(service.findPerson(2).getSexe(), "F");
 
     Assert.assertNotNull(service.findPerson(3));
     Assert.assertNotNull(service.findPerson(3).getFriends());
     Assert.assertEquals(service.findPerson(3).getFriends().size(), 1);
+    Assert.assertEquals(service.findPerson(3).getSexe(), "H");
 
     Assert.assertNotNull(service.findPerson(5));
     Assert.assertEquals(service.findPerson(5).getFriends().size(), 0);
+    Assert.assertEquals(service.findPerson(5).getSexe(), "H");
   }
 
   @Test
@@ -65,6 +69,7 @@ public class PersonServiceTest {
     final PersonDto dto = new PersonDto();
     dto.setName("truc");
     dto.setBirthday(Date.valueOf("2003-01-01"));
+    dto.setSexe("H");
     service.createPerson(dto);
     Assert.assertEquals(service.findAllPerson().size(), 6);
   }
@@ -126,7 +131,7 @@ public class PersonServiceTest {
   @Test
   public void deleteAll() {
     Assert.assertEquals(5, service.deleteAllPerson());
-    Assert.assertEquals(0, service.findAllPerson());
+    Assert.assertEquals(0, service.findAllPerson().size());
   }
 
 }
