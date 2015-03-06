@@ -3,6 +3,9 @@
  */
 package presentation.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import mapper.PersonMapper;
@@ -49,6 +52,11 @@ public class InsertPersonController {
       _persistPerson(form);
       return "redirect:/persons";
     }
+  }
+
+  @ModelAttribute("sexeChoice")
+  public List<String> getSexe() {
+    return Arrays.asList("H", "F");
   }
 
   private void _persistPerson(final PersonForm form) {

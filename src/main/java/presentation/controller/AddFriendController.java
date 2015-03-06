@@ -82,6 +82,7 @@ public class AddFriendController {
     form.setId(dto.getId());
     form.setName(dto.getName());
     form.setBirthday(dto.getBirthday());
+    form.setSexe(dto.getSexe());
     return form;
   }
 

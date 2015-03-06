@@ -19,12 +19,14 @@
 		<form:hidden path="person.id"/>
 		<form:hidden path="person.name"/>
 		<form:hidden path="person.birthday"/>
+		<form:hidden path="person.sexe"/>
 		<table>
 			<thead>
 				<tr>
 					<th><spring:message code="form.friends" /></th>
 					<th><spring:message code="form.id" /></th>
 					<th><spring:message code="form.name" /></th>
+					<th><spring:message code="form.sexe" /></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +39,9 @@
 						<td><form:input path="friends[${st.index}].person.name"
 								readonly="true" /> <form:errors
 								path="friends[${st.index}].person.name" /></td>
+						<td><form:input path="friends[${st.index}].person.sexe"
+								readonly="true" /> <form:errors
+								path="friends[${st.index}].person.sexe" /></td>
 					</tr>
 					<form:hidden path="friends[${st.index}].person.birthday"/>
 				</c:forEach>

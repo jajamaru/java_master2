@@ -1,0 +1,64 @@
+article.person {
+	border: 3px #ddd solid;
+	background-color: #fff;
+	
+	margin-top: 2em;
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 70%;
+}
+
+article.person:nth-child(odd) {
+	background-color: #eee;
+}
+
+article.person table {
+	background-color: #fff;
+	width: 100%;
+}
+
+article.person table caption {
+	text-align: left;
+	font-size: 1.1em;
+	
+	padding-left: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	
+	width: 100%
+}
+
+/* article.person table * input[type="submit"] { */
+/* 	background: none; */
+/* 	border: none; */
+	
+/* 	padding: 0.5em; */
+/* 	background-color: orange; */
+/* } */
+
+/* article.person table * input[type="submit"]:HOVER { */
+/* 	background-color: #ff8080; */
+/* } */
+
+/* article.person table * input[type="submit"]:ACTIVE { */
+/* 	position: relative; */
+/* 	top: 1px; */
+/* } */
+
+article.person table thead tr {
+	border-bottom: 2px #000 solid;
+}
+
+article.person table thead * th {
+	background-color: #ccc;
+}
+
+article.person table tbody tr:nth-child(odd) {
+	background-color: #eee;
+}
+
+article.person table tbody * td {
+	
+}

@@ -1,0 +1,8 @@
+.form {
+	float: left;
+	clear: left;
+}
+
+.form-error {
+	color: red;
+}

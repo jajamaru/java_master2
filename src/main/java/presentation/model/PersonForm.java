@@ -26,9 +26,26 @@ public class PersonForm {
   private String  name;
 
   @NotNull
+  private String  sexe;
+
+  @NotNull
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   @Past
   private Date    birthday;
+
+  /**
+   * @return the sexe
+   */
+  public String getSexe() {
+    return sexe;
+  }
+
+  /**
+   * @param sexe the sexe to set
+   */
+  public void setSexe(final String sexe) {
+    this.sexe = sexe;
+  }
 
   /**
    * @return the id

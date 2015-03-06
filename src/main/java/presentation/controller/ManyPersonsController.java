@@ -65,6 +65,7 @@ public class ManyPersonsController {
       json.setId(person.getId());
       json.setName(person.getName());
       json.setBirthday(person.getBirthday());
+      json.setSexe(person.getSexe());
       tab.add(json);
     }
     final PersonJson[] tabDto = new PersonJson[tab.size()];
@@ -80,6 +81,7 @@ public class ManyPersonsController {
       xml.setId(person.getId());
       xml.setName(person.getName());
       xml.setBirthday(person.getBirthday());
+      xml.setSexe(person.getSexe());
       pList.add(xml);
     }
     persons.setPerson(pList);

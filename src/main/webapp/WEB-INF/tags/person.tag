@@ -7,22 +7,32 @@
 <%@ attribute name="person" required="true" type="presentation.dto.PersonDto" %>
 
 <article class="person">
-	<header>
-		<h2><c:out value="${person.id}" /></h2>
-	</header>
 	<table>
 		<caption><spring:message code="person.caption.private" /></caption>
 		<thead>
 			<tr>
+				<th><spring:message code="person.id" /></th>
 				<th><spring:message code="person.name" /></th>
 				<th><spring:message code="person.birthday" /></th>
+				<th><spring:message code="person.sexe" /></th>
+				<th><spring:message code="submit.delete" /></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
+				<td><c:out value="${person.id}" /></td>
 				<td><c:out value="${person.name}" /></td>
 				<td><fmt:formatDate value="${person.birthday}"
 						pattern="dd/MM/yyyy" /></td>
+				<td><c:out value="${person.sexe}" /></td>
+				<td>
+					<form:form action="/persons/${person.id}" _method="POST" >
+						<input type="hidden" name="_method" value="delete" />
+						<div class="form">
+							<input type="submit" value="<spring:message code="submit.delete" />" />
+						</div>
+					</form:form>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -50,12 +60,4 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<footer>
-		<form:form action="/persons/${person.id}" _method="POST" >
-			<input type="hidden" name="_method" value="delete" />
-			<div class="form">
-				<input type="submit" value="<spring:message code="submit.delete" />" />
-			</div>
-		</form:form>
-	</footer>
 </article>

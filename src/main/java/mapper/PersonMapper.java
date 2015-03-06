@@ -118,16 +118,20 @@ public class PersonMapper {
     final PersonDto dto = _createDto(person);
 
     final List<PersonDto> result = new ArrayList<PersonDto>();
+    final List<PersonDto> withFriends = new ArrayList<PersonDto>();
 
     final MemoryPerson<PersonDto, PersonDo> mem = new MemoryPerson<PersonDto, PersonDo>();
     if (person.getFriends() != null) {
       result.addAll(_convertDoToDto(person.getFriends(), mem));
     }
     if (person.getFriendsWith() != null) {
-      result.addAll(_convertDoToDto(person.getFriendsWith(), mem));
+      withFriends.addAll(_convertDoToDto(person.getFriendsWith(), mem));
+      result.addAll(withFriends);
     }
 
     dto.setFriends(result);
+    dto.setPersistFriends(result);
+    dto.setPersistWithFriends(withFriends);
     return dto;
   }
 
@@ -152,10 +156,13 @@ public class PersonMapper {
       if (!mem.isExplored(tmpDo)) {
         mem.addExplored(tmpDo);
         if (tmpDo.getFriends() != null) {
-          tmpDto.setFriends(_convertDoToDto(tmpDo.getFriends(), mem));
+          final List<PersonDto> f = _convertDoToDto(tmpDo.getFriends(), mem);
+          tmpDto.setFriends(f);
+          tmpDto.setPersistFriends(f);
         }
         if (tmpDo.getFriendsWith() != null) {
-          tmpDto.setFriends(_convertDoToDto(tmpDo.getFriendsWith(), mem));
+          final List<PersonDto> f = _convertDoToDto(tmpDo.getFriendsWith(), mem);
+          tmpDto.setPersistWithFriends(f);
         }
       }
 
@@ -186,6 +193,7 @@ public class PersonMapper {
     dto.setId(form.getId());
     dto.setName(form.getName());
     dto.setBirthday(form.getBirthday());
+    dto.setSexe(form.getSexe());
     return dto;
   }
 
@@ -194,6 +202,7 @@ public class PersonMapper {
     dto.setBirthday(form.getPerson().getBirthday());
     dto.setId(form.getPerson().getId());
     dto.setName(form.getPerson().getName());
+    dto.setSexe(form.getPerson().getSexe());
 
     final List<PersonDto> newFriends = new ArrayList<PersonDto>();
     final List<Friend> friends = form.getFriends();
@@ -213,6 +222,7 @@ public class PersonMapper {
     dto.setName(form.getPerson().getName());
     dto.setBirthday(form.getPerson().getBirthday());
     dto.setId(form.getPerson().getId());
+    dto.setSexe(form.getPerson().getSexe());
     return dto;
   }
 
