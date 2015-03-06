@@ -87,8 +87,46 @@ public class PersonServiceTest {
   }
 
   @Test
+  public void deleteFriends() {
+    PersonDto p1 = service.findPerson(1);
+    Assert.assertEquals(p1.getFriends().size(), 2);
+
+    service.deleteAllFriends(p1);
+
+    p1 = service.findPerson(1);
+    Assert.assertEquals(p1.getFriends().size(), 0);
+
+  }
+
+  @Test
+  public void deleteSingleFriend() {
+    PersonDto p1 = service.findPerson(1);
+    final PersonDto p3 = service.findPerson(3);
+    Assert.assertEquals(p1.getFriends().size(), 2);
+
+    service.deleteSingleFriend(p1, p3);
+
+    p1 = service.findPerson(1);
+    Assert.assertEquals(p1.getFriends().size(), 1);
+
+  }
+
+  @Test
+  public void deleteFriendWhoIsNotFriendWithThisPerson() {
+    PersonDto p3 = service.findPerson(3);
+    final PersonDto p4 = service.findPerson(4);
+    Assert.assertEquals(p3.getFriends().size(), 1);
+
+    service.deleteSingleFriend(p3, p4);
+
+    p3 = service.findPerson(3);
+    Assert.assertEquals(p3.getFriends().size(), 1);
+  }
+
+  @Test
   public void deleteAll() {
     Assert.assertEquals(5, service.deleteAllPerson());
+    Assert.assertEquals(0, service.findAllPerson());
   }
 
 }
