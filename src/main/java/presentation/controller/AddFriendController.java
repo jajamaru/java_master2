@@ -59,7 +59,7 @@ public class AddFriendController {
   @ModelAttribute("friendList")
   final FriendForm form, final BindingResult result, final ModelMap model, @PathVariable
   final Integer id) {
-    
+
     try {
       if (result.hasErrors()) {
         model.addAttribute("result", "NOK");
@@ -74,7 +74,7 @@ public class AddFriendController {
   }
 
   private void _updateFriends(final FriendForm form) {
-    service.updatePerson(PersonMapper.convertFriendFormToDto(form));
+    service.updatePerson(PersonMapper.convertFriendFormToDto(form)) ;
   }
 
   private PersonForm _createPersonForm(final PersonDto dto) {

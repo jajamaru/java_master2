@@ -58,8 +58,7 @@ public abstract class PersonDo {
   @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
   private List<PersonDo> friends;
 
-  @ManyToMany(mappedBy = "friends", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-      CascadeType.REFRESH })
+  @ManyToMany(mappedBy = "friends", cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
   private List<PersonDo> friendsWith;
 
   /**
@@ -204,7 +203,8 @@ public abstract class PersonDo {
   @Override
   public String toString() {
     return "PersonDo [id=" + id + ", name=" + name + ", birthday=" + birthday + ", sexe=" + sexe
-        + ", friends=" + friends + ", friendsWith=" + friendsWith + "]";
+        + ", friends=" + ((friends != null) ? (friends.size()) : 0) + ", friendsWith="
+        + ((friendsWith != null) ? (friendsWith.size()) : 0) + "]";
   }
 
 }

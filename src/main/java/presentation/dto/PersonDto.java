@@ -17,36 +17,6 @@ public class PersonDto {
   private Date            birthday;
   private String          sexe;
   private List<PersonDto> friends;
-  private List<PersonDto> persistFriends;
-  private List<PersonDto> persistWithFriends;
-
-  /**
-   * @return the persistfriends
-   */
-  public List<PersonDto> getPersistfriends() {
-    return persistFriends;
-  }
-
-  /**
-   * @param persistfriends the persistfriends to set
-   */
-  public void setPersistFriends(final List<PersonDto> persistFriends) {
-    this.persistFriends = persistFriends;
-  }
-
-  /**
-   * @return the persistWithfriends
-   */
-  public List<PersonDto> getPersistWithfriends() {
-    return persistWithFriends;
-  }
-
-  /**
-   * @param persistWithfriends the persistWithfriends to set
-   */
-  public void setPersistWithFriends(final List<PersonDto> persistWithFriends) {
-    this.persistWithFriends = persistWithFriends;
-  }
 
   /**
    * @return the sexe
@@ -168,6 +138,15 @@ public class PersonDto {
       return false;
     }
     return true;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "PersonDto [id=" + id + ", name=" + name + ", birthday=" + birthday + ", sexe=" + sexe
+        + ", friends=" + ((friends != null) ? (friends.size()) : 0) + "]";
   }
 
 }

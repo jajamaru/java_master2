@@ -19,12 +19,7 @@ public class FemmeDo extends PersonDo {
    */
   @Override
   public String toString() {
-    return "FemmeDo [getSexe()=" + getSexe() + ", getFriendsWith()=" + getFriendsWith()
-        + ", getFriends()=" + getFriends() + ", getId()=" + getId() + ", getName()=" + getName()
-        + ", getBirthday()=" + getBirthday() + ", hashCode()=" + hashCode() + ", getClass()="
-        + getClass() + ", toString()=" + super.toString() + "]";
+    return "FemmeDo [ " + super.toString() + " ]";
   }
-
-  //  
 
 }

@@ -81,7 +81,7 @@ public class PersonMapper {
   }
 
   private static HommeDo _createHommeDo(final PersonDto dto) {
-    HommeDo homme = new HommeDo();
+    final HommeDo homme = new HommeDo();
     homme.setBirthday(dto.getBirthday());
     homme.setName(dto.getName());
     homme.setId(dto.getId());
@@ -89,7 +89,7 @@ public class PersonMapper {
   }
 
   private static FemmeDo _createFemmeDo(final PersonDto dto) {
-    FemmeDo femme = new FemmeDo();
+    final FemmeDo femme = new FemmeDo();
     femme.setBirthday(dto.getBirthday());
     femme.setName(dto.getName());
     femme.setId(dto.getId());
@@ -118,20 +118,16 @@ public class PersonMapper {
     final PersonDto dto = _createDto(person);
 
     final List<PersonDto> result = new ArrayList<PersonDto>();
-    final List<PersonDto> withFriends = new ArrayList<PersonDto>();
 
     final MemoryPerson<PersonDto, PersonDo> mem = new MemoryPerson<PersonDto, PersonDo>();
     if (person.getFriends() != null) {
       result.addAll(_convertDoToDto(person.getFriends(), mem));
     }
     if (person.getFriendsWith() != null) {
-      withFriends.addAll(_convertDoToDto(person.getFriendsWith(), mem));
-      result.addAll(withFriends);
+      result.addAll(_convertDoToDto(person.getFriendsWith(), mem));
     }
 
     dto.setFriends(result);
-    dto.setPersistFriends(result);
-    dto.setPersistWithFriends(withFriends);
     return dto;
   }
 
@@ -153,17 +149,16 @@ public class PersonMapper {
       final PersonDto instance = mem.getInstanceOf(tmpDto);
       result.add(instance);
 
+      final List<PersonDto> f = new ArrayList<PersonDto>();
       if (!mem.isExplored(tmpDo)) {
         mem.addExplored(tmpDo);
         if (tmpDo.getFriends() != null) {
-          final List<PersonDto> f = _convertDoToDto(tmpDo.getFriends(), mem);
-          tmpDto.setFriends(f);
-          tmpDto.setPersistFriends(f);
+          f.addAll(_convertDoToDto(tmpDo.getFriends(), mem));
         }
         if (tmpDo.getFriendsWith() != null) {
-          final List<PersonDto> f = _convertDoToDto(tmpDo.getFriendsWith(), mem);
-          tmpDto.setPersistWithFriends(f);
+          f.addAll(_convertDoToDto(tmpDo.getFriendsWith(), mem));
         }
+        tmpDto.setFriends(f);
       }
 
     }

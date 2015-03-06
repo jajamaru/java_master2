@@ -99,13 +99,18 @@ public class PersonService implements IPersonService {
   @Override
   public boolean deleteSingleFriend(final PersonDto person, final PersonDto deleted) {
     if (person.getFriends().contains(deleted)) {
-      boolean b = person.getFriends().remove(deleted);
-      b = b && deleted.getFriends().remove(person);
-      updatePerson(person);
-      updatePerson(deleted);
-      return b;
+      if (person.getFriends().remove(deleted)) {
+        System.out.println("UPDATE - " + person.toString());
+        updatePerson(person);
+      }
     }
-    return false;
+    if (deleted.getFriends().contains(person)) {
+      if (deleted.getFriends().remove(person)) {
+        System.out.println("UPDATE - " + deleted.toString());
+        updatePerson(deleted);
+      }
+    }
+    return true;
   }
 
 }
