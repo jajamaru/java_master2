@@ -6,6 +6,7 @@ package service;
 import java.util.List;
 
 import presentation.dto.PersonDto;
+import exception.PersonNotFoundException;
 
 /**
  * @author Romain
@@ -24,7 +25,7 @@ public interface IPersonService {
    * @param id of delete person
    * @return Number of deletion
    */
-  int deletePerson(final int id);
+  int deletePerson(final int id) throws PersonNotFoundException;
 
   /**
    * Delete all person
@@ -59,7 +60,7 @@ public interface IPersonService {
    * @param id Person's id
    * @return The person retrieved
    */
-  PersonDto findPerson(final int id);
+  PersonDto findPerson(final int id) throws PersonNotFoundException;
 
   /**
    * Retrieve all person

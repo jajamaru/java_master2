@@ -6,6 +6,8 @@ package service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import mapper.PersonMapper;
 
 import org.apache.log4j.Logger;
@@ -19,6 +21,7 @@ import presentation.dto.PersonDto;
 import service.IPersonService;
 import dao.IPersonDao;
 import entity.PersonDo;
+import exception.PersonNotFoundException;
 
 /**
  * @author Romain
@@ -48,13 +51,15 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#deletePerson(int)
    */
   @Override
-  public int deletePerson(final int id) {
+  public int deletePerson(final int id) throws PersonNotFoundException {
     log.debug("Deleting a person with id " + id);
     final int nbDeleted = dao.delete(id);
     if (nbDeleted > 0) {
       log.debug("Person deleted [ nb row deleted " + nbDeleted + " ]");
     } else {
-      log.debug("No person deleted");
+      log.debug("No person deleted with id " + id);
+      throw new PersonNotFoundException("PersonDo object with id " + id
+          + " does not exists or he's aldready deleted !");
     }
     return nbDeleted;
   }
@@ -80,9 +85,16 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findPerson(int)
    */
   @Override
-  public PersonDto findPerson(final int id) {
+  public PersonDto findPerson(final int id) throws PersonNotFoundException {
     log.debug("Retrieving a person with id " + id);
-    return PersonMapper.convertDotoDto(dao.find(id));
+    try {
+      final PersonDo personDo = dao.find(id);
+      log.debug("Person retrieved " + personDo);
+      return PersonMapper.convertDotoDto(personDo);
+    } catch (final NoResultException e) {
+      log.error("No person found with id " + id, e);
+      throw new PersonNotFoundException("PersonDo object does not found with id " + id);
+    }
 
   }
 

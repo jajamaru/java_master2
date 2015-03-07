@@ -3,8 +3,6 @@
  */
 package presentation.controller;
 
-import javax.persistence.NoResultException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import presentation.dto.PersonDto;
 import service.IPersonService;
+import exception.PersonNotFoundException;
 
 /**
  * @author romain
@@ -40,7 +39,7 @@ public class PersonDeleteController {
     try {
       service.deletePerson(id);
       return "redirect:/persons";
-    } catch (final NoResultException e) {
+    } catch (final PersonNotFoundException e) {
       return "404";
     }
   }
@@ -52,7 +51,7 @@ public class PersonDeleteController {
       final PersonDto dto = service.findPerson(id);
       service.deleteAllFriends(dto);
       return "redirect:/persons";
-    } catch (final NoResultException e) {
+    } catch (final PersonNotFoundException e) {
       return "404";
     }
   }
@@ -66,7 +65,7 @@ public class PersonDeleteController {
       final PersonDto deleted = service.findPerson(idFriend);
       service.deleteSingleFriend(dto, deleted);
       return "redirect:/persons";
-    } catch (final NoResultException e) {
+    } catch (final PersonNotFoundException e) {
       return "404";
     }
   }

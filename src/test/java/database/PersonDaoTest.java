@@ -50,7 +50,7 @@ public class PersonDaoTest {
 
   @Test
   public void find() {
-    PersonDo person = dao.find(1);
+    final PersonDo person = dao.find(1);
     Assert.assertNotNull(person);
     Assert.assertNotNull(person.getFriends());
     Assert.assertNotNull(person.getFriendsWith());
