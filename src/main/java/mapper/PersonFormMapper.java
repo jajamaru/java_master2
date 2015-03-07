@@ -4,7 +4,6 @@
 package mapper;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import presentation.dto.PersonDto;
@@ -73,10 +72,9 @@ public class PersonFormMapper {
 
     final List<PersonDto> newFriends = new ArrayList<PersonDto>();
     final List<Friend> friends = form.getFriends();
-    for (final Iterator<Friend> it = friends.iterator(); it.hasNext();) {
-      final Friend f = it.next();
-      if (f.isFriendShip()) {
-        newFriends.add(_convertFriendToDto(f));
+    for (final Friend itFriend : friends) {
+      if (itFriend.isFriendShip()) {
+        newFriends.add(_convertFriendToDto(itFriend));
       }
     }
 
@@ -97,12 +95,11 @@ public class PersonFormMapper {
       final List<PersonDto> list) {
     final List<Friend> form = new ArrayList<Friend>();
     final List<PersonDto> friends = refDto.getFriends();
-    for (final Iterator<PersonDto> it = list.iterator(); it.hasNext();) {
-      final PersonDto person = it.next();
-      if (!person.equals(refDto)) {
+    for (final PersonDto itList : list) {
+      if (!itList.equals(refDto)) {
         final Friend newFriend = new Friend();
-        newFriend.setPerson(createPersonForm(person));
-        newFriend.setFriendShip(friends.contains(person));
+        newFriend.setPerson(createPersonForm(itList));
+        newFriend.setFriendShip(friends.contains(itList));
         form.add(newFriend);
       }
     }

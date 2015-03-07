@@ -32,7 +32,7 @@ public class PersonMapper {
   public static PersonDo convertDtoToDo(final PersonDto dto) {
     log.debug("Begin of conversion of " + dto);
     final PersonDo person = _createDo(dto);
-    if (dto.getFriends() != null) {
+    if (dto.getFriends() != null && !dto.getFriends().isEmpty()) {
       log.debug("Friends conversion" + dto.getFriends().size());
       final MemoryPerson<PersonDo, PersonDto> mem = new MemoryPerson<PersonDo, PersonDto>();
       person.setFriends(_convertDtotoDo(dto.getFriends(), mem));
@@ -62,7 +62,7 @@ public class PersonMapper {
 
       if (!mem.isExplored(itDto)) {
         mem.addExplored(itDto);
-        if (itDto.getFriends() != null) {
+        if (itDto.getFriends() != null && !itDto.getFriends().isEmpty()) {
           tmpDo.setFriends(_convertDtotoDo(itDto.getFriends(), mem));
         }
       }
@@ -130,11 +130,11 @@ public class PersonMapper {
     final List<PersonDto> result = new ArrayList<PersonDto>();
 
     final MemoryPerson<PersonDto, PersonDo> mem = new MemoryPerson<PersonDto, PersonDo>();
-    if (person.getFriends() != null) {
+    if (person.getFriends() != null && !person.getFriends().isEmpty()) {
       log.debug("Friend conversion [ getFriends() " + person.getFriends().size() + " ]");
       result.addAll(_convertDoToDto(person.getFriends(), mem));
     }
-    if (person.getFriendsWith() != null) {
+    if (person.getFriendsWith() != null && !person.getFriendsWith().isEmpty()) {
       log.debug("Friend conversion [ getFriendsWith() " + person.getFriendsWith().size() + " ]");
       result.addAll(_convertDoToDto(person.getFriendsWith(), mem));
     }
@@ -165,10 +165,10 @@ public class PersonMapper {
       final List<PersonDto> f = new ArrayList<PersonDto>();
       if (!mem.isExplored(itDo)) {
         mem.addExplored(itDo);
-        if (itDo.getFriends() != null) {
+        if (itDo.getFriends() != null && !itDo.getFriends().isEmpty()) {
           f.addAll(_convertDoToDto(itDo.getFriends(), mem));
         }
-        if (itDo.getFriendsWith() != null) {
+        if (itDo.getFriendsWith() != null && !itDo.getFriendsWith().isEmpty()) {
           f.addAll(_convertDoToDto(itDo.getFriendsWith(), mem));
         }
         tmpDto.setFriends(f);
