@@ -22,6 +22,4 @@ public class HommeDo extends PersonDo {
     return "HommeDo [ " + super.toString() + " ]";
   }
 
-  
-
 }

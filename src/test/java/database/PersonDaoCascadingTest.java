@@ -30,7 +30,7 @@ import entity.PersonDo;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:configTest/application-context-test.xml")
+@ContextConfiguration("classpath:configTest/applicationContext-test.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class PersonDaoCascadingTest {
@@ -66,7 +66,7 @@ public class PersonDaoCascadingTest {
 
     p2.setFriends(Arrays.asList(p3, p4));
     p1.setFriends(Arrays.asList(p2));
-//    p1.setFriendsWith(Arrays.asList(p4));
+    //    p1.setFriendsWith(Arrays.asList(p4));
 
     dao.create(p1);
 
@@ -83,7 +83,7 @@ public class PersonDaoCascadingTest {
   @Test
   public void updateCascading() {
     final PersonDo p3 = dao.find(3);
-    final PersonDo p1 = p3.getFriends().get(0);
+    final PersonDo p1 = p3.getFriendsWith().get(0);
     p1.setName("abcd");
 
     dao.update(p3);

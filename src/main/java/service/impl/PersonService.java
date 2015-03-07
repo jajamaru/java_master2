@@ -8,6 +8,7 @@ import java.util.List;
 
 import mapper.PersonMapper;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,18 @@ import entity.PersonDo;
 @Transactional(propagation = Propagation.REQUIRED)
 public class PersonService implements IPersonService {
 
+  private static Logger log = Logger.getLogger(PersonService.class);
+
   @Autowired
   @Qualifier("personDao")
-  private IPersonDao dao;
+  private IPersonDao    dao;
 
   /* (non-Javadoc)
    * @see service.IPersonService#createPerson(entity.PersonDo)
    */
   @Override
   public void createPerson(final PersonDto dto) {
+    log.debug("createPerson - Creating person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     dao.create(personDo);
   }
@@ -45,6 +49,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public int deletePerson(final int id) {
+    log.debug("deletePerson - deleting person with id " + id);
     return dao.delete(id);
   }
 
@@ -53,6 +58,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public void updatePerson(final PersonDto dto) {
+    log.debug("updatePerson - Updating person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     dao.update(personDo);
   }
@@ -62,6 +68,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public PersonDto findPerson(final int id) {
+    log.debug("findPerson - Retrieving person with id " + id);
     return PersonMapper.convertDotoDto(dao.find(id));
 
   }
@@ -71,6 +78,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public int deleteAllPerson() {
+    log.debug("deleteAllPerson - Deleting all person");
     return dao.deleteAll();
   }
 
@@ -79,6 +87,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public List<PersonDto> findAllPerson() {
+    log.debug("findAllPerson - Finding all person");
     return PersonMapper.convertDotoDto(dao.findAll());
   }
 
@@ -88,6 +97,8 @@ public class PersonService implements IPersonService {
   @Override
   public int deleteAllFriends(final PersonDto person) {
     final int nbFriendsDeleted = person.getFriends().size();
+    log.debug("deleteAllFriends - deleting all friend to a " + person + ". " + nbFriendsDeleted
+        + " deleted");
     person.setFriends(new ArrayList<PersonDto>());
     updatePerson(person);
     return nbFriendsDeleted;
@@ -100,13 +111,13 @@ public class PersonService implements IPersonService {
   public boolean deleteSingleFriend(final PersonDto person, final PersonDto deleted) {
     if (person.getFriends().contains(deleted)) {
       if (person.getFriends().remove(deleted)) {
-        System.out.println("UPDATE - " + person.toString());
+        log.debug("UPDATE - " + person.toString());
         updatePerson(person);
       }
     }
     if (deleted.getFriends().contains(person)) {
       if (deleted.getFriends().remove(person)) {
-        System.out.println("UPDATE - " + deleted.toString());
+        log.debug("UPDATE - " + deleted.toString());
         updatePerson(deleted);
       }
     }

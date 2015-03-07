@@ -23,7 +23,7 @@ import service.IPersonService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:configTest/application-context-test.xml")
+@ContextConfiguration("classpath:configTest/applicationContext-test.xml")
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class PersonServiceTest {

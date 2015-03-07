@@ -74,7 +74,7 @@ public class AddFriendController {
   }
 
   private void _updateFriends(final FriendForm form) {
-    service.updatePerson(PersonMapper.convertFriendFormToDto(form)) ;
+    service.updatePerson(PersonMapper.convertFriendFormToDto(form));
   }
 
   private PersonForm _createPersonForm(final PersonDto dto) {

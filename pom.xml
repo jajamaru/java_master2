@@ -27,11 +27,11 @@
 
 		<!-- Spring dependencies -->
 		<version.spring>3.2.2.RELEASE</version.spring>
-		
+
 		<!-- Hibernate dependencies -->
 		<version.hibernate>4.3.8.Final</version.hibernate>
 		<version.hibernate-validator>5.1.3.Final</version.hibernate-validator>
-		
+
 		<!-- Other version dependencies -->
 		<version.junit>4.8.1</version.junit>
 		<version.jackson>1.9.10</version.jackson>
@@ -39,7 +39,8 @@
 		<version.servlet>3.1.0</version.servlet>
 		<version.openejb>6.0-6</version.openejb>
 		<version.jstl>1.2</version.jstl>
-		
+		<version.log4j>1.2.17</version.log4j>
+
 		<!-- Jdk version to compile -->
 		<version.jdk>1.7</version.jdk>
 	</properties>
@@ -128,13 +129,20 @@
 			<artifactId>geronimo-osgi-locator</artifactId>
 			<version>1.1</version>
 		</dependency>
-		
+
 		<!-- Jackson JSON Mapper -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${version.jackson}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${version.log4j}</version>
+		</dependency>
+
 
 	</dependencies>
 

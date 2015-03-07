@@ -45,7 +45,7 @@ public class UpdatePersonController {
       return "404";
     }
   }
-  
+
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
   public String updatePerson(final Model model, @PathVariable
   final Integer id, @Valid
@@ -63,10 +63,9 @@ public class UpdatePersonController {
       updatePerson(form);
       return "redirect:/persons";
     }
-    
 
   }
-  
+
   private PersonForm _createPersonForm(final PersonDto dto) {
     final PersonForm form = new PersonForm();
     form.setId(dto.getId());
