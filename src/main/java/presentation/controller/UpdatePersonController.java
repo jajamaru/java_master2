@@ -6,7 +6,7 @@ package presentation.controller;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
-import mapper.PersonMapper;
+import mapper.PersonFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -67,15 +67,11 @@ public class UpdatePersonController {
   }
 
   private PersonForm _createPersonForm(final PersonDto dto) {
-    final PersonForm form = new PersonForm();
-    form.setId(dto.getId());
-    form.setName(dto.getName());
-    form.setBirthday(dto.getBirthday());
-    return form;
+    return PersonFormMapper.createPersonForm(dto);
   }
 
   private void updatePerson(final PersonForm form) {
-    service.updatePerson(PersonMapper.convertPersonFormToDto(form));
+    service.updatePerson(PersonFormMapper.convertPersonFormToDto(form));
   }
 
 }

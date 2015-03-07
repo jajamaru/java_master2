@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import mapper.PersonMapper;
+import mapper.PersonFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,7 +60,7 @@ public class InsertPersonController {
   }
 
   private void _persistPerson(final PersonForm form) {
-    service.createPerson(PersonMapper.convertPersonFormToDto(form));
+    service.createPerson(PersonFormMapper.convertPersonFormToDto(form));
   }
 
 }

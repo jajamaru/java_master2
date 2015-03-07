@@ -50,8 +50,9 @@ public interface IPersonService {
   /**
    * Update a person
    * @param person Person to update
+   * @return the personDto merged
    */
-  void updatePerson(final PersonDto person);
+  PersonDto updatePerson(final PersonDto person);
 
   /**
    * Retrieve a person by id

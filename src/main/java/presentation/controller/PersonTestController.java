@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
 
-import mapper.PersonMapper;
+import mapper.PersonFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,13 +59,7 @@ public class PersonTestController {
   }
 
   private void persistPerson(final PersonForm form) {
-    service.createPerson(PersonMapper.convertPersonFormToDto(form));
+    service.createPerson(PersonFormMapper.convertPersonFormToDto(form));
   }
-
-  //  @InitBinder
-  //  public void validator(final WebDataBinder binder) {
-  //    final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-  //    binder.registerCustomEditor(Date.class, new CustomDateEditor(format, true));
-  //  }
 
 }

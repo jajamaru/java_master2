@@ -4,8 +4,10 @@
 package presentation.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import mapper.PersonJsonMapper;
+import mapper.PersonXmlMapper;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import presentation.dto.PersonDto;
 import presentation.dto.json.PersonJson;
 import presentation.dto.xml.PersonListXml;
-import presentation.dto.xml.PersonXml;
 import service.IPersonService;
 
 /**
@@ -59,33 +60,11 @@ public class ManyPersonsController {
   }
 
   private PersonJson[] _getPersonInJson(final List<? extends PersonDto> list) {
-    final List<PersonJson> tab = new ArrayList<PersonJson>();
-    for (PersonDto person : list) {
-      final PersonJson json = new PersonJson();
-      json.setId(person.getId());
-      json.setName(person.getName());
-      json.setBirthday(person.getBirthday());
-      json.setSexe(person.getSexe());
-      tab.add(json);
-    }
-    final PersonJson[] tabDto = new PersonJson[tab.size()];
-    tab.toArray(tabDto);
-    return tabDto;
+    return PersonJsonMapper.getPersonInJson(list);
   }
 
   private PersonListXml _getPersonInXml(final List<? extends PersonDto> list) {
-    final PersonListXml persons = new PersonListXml();
-    final List<PersonXml> pList = new ArrayList<PersonXml>();
-    for (PersonDto person : list) {
-      final PersonXml xml = new PersonXml();
-      xml.setId(person.getId());
-      xml.setName(person.getName());
-      xml.setBirthday(person.getBirthday());
-      xml.setSexe(person.getSexe());
-      pList.add(xml);
-    }
-    persons.setPerson(pList);
-    return persons;
+    return PersonXmlMapper.getPersonInXml(list);
   }
 
 }

@@ -3,14 +3,12 @@
  */
 package presentation.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
-import mapper.PersonMapper;
+import mapper.PersonFormMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import presentation.dto.PersonDto;
-import presentation.model.Friend;
 import presentation.model.FriendForm;
-import presentation.model.PersonForm;
 import service.IPersonService;
 
 /**
@@ -74,38 +70,11 @@ public class AddFriendController {
   }
 
   private void _updateFriends(final FriendForm form) {
-    service.updatePerson(PersonMapper.convertFriendFormToDto(form));
-  }
-
-  private PersonForm _createPersonForm(final PersonDto dto) {
-    final PersonForm form = new PersonForm();
-    form.setId(dto.getId());
-    form.setName(dto.getName());
-    form.setBirthday(dto.getBirthday());
-    form.setSexe(dto.getSexe());
-    return form;
+    service.updatePerson(PersonFormMapper.convertFriendFormToDto(form));
   }
 
   private FriendForm _createFriendForm(final PersonDto refDto, final List<PersonDto> list) {
-    final FriendForm form = new FriendForm();
-    form.setPerson(_createPersonForm(refDto));
-    form.setFriends(_createListFriendForm(refDto, list));
-    return form;
-  }
-
-  private List<Friend> _createListFriendForm(final PersonDto refDto, final List<PersonDto> list) {
-    final List<Friend> form = new ArrayList<Friend>();
-    final List<PersonDto> friends = refDto.getFriends();
-    for (final Iterator<PersonDto> it = list.iterator(); it.hasNext();) {
-      final PersonDto person = it.next();
-      if (!person.equals(refDto)) {
-        final Friend newFriend = new Friend();
-        newFriend.setPerson(_createPersonForm(person));
-        newFriend.setFriendShip(friends.contains(person));
-        form.add(newFriend);
-      }
-    }
-    return form;
+    return PersonFormMapper.createFriendForm(refDto, list);
   }
 
 }

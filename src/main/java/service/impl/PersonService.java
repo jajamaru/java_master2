@@ -39,7 +39,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public void createPerson(final PersonDto dto) {
-    log.debug("createPerson - Creating person " + dto);
+    log.debug("Creating a person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     dao.create(personDo);
   }
@@ -49,18 +49,31 @@ public class PersonService implements IPersonService {
    */
   @Override
   public int deletePerson(final int id) {
-    log.debug("deletePerson - deleting person with id " + id);
-    return dao.delete(id);
+    log.debug("Deleting a person with id " + id);
+    final int nbDeleted = dao.delete(id);
+    if (nbDeleted > 0) {
+      log.debug("Person deleted [ nb row deleted " + nbDeleted + " ]");
+    } else {
+      log.debug("No person deleted");
+    }
+    return nbDeleted;
   }
 
   /* (non-Javadoc)
    * @see service.IPersonService#updatePerson(entity.PersonDo)
    */
   @Override
-  public void updatePerson(final PersonDto dto) {
-    log.debug("updatePerson - Updating person " + dto);
+  public PersonDto updatePerson(final PersonDto dto) {
+    log.debug("Updating a person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
-    dao.update(personDo);
+    try {
+      final PersonDto dtoMerged = PersonMapper.convertDotoDto(dao.update(personDo));
+      log.debug("Person updated " + dtoMerged);
+      return dtoMerged;
+    } catch (final IllegalArgumentException e) {
+      log.error("Empty entity or entity was already deleted before the merging", e);
+    }
+    return null;
   }
 
   /* (non-Javadoc)
@@ -68,7 +81,7 @@ public class PersonService implements IPersonService {
    */
   @Override
   public PersonDto findPerson(final int id) {
-    log.debug("findPerson - Retrieving person with id " + id);
+    log.debug("Retrieving a person with id " + id);
     return PersonMapper.convertDotoDto(dao.find(id));
 
   }
@@ -78,8 +91,10 @@ public class PersonService implements IPersonService {
    */
   @Override
   public int deleteAllPerson() {
-    log.debug("deleteAllPerson - Deleting all person");
-    return dao.deleteAll();
+    log.debug("Deleting all person");
+    final int nbDeleted = dao.deleteAll();
+    log.debug(nbDeleted + " persons deleted");
+    return nbDeleted;
   }
 
   /* (non-Javadoc)
@@ -87,8 +102,10 @@ public class PersonService implements IPersonService {
    */
   @Override
   public List<PersonDto> findAllPerson() {
-    log.debug("findAllPerson - Finding all person");
-    return PersonMapper.convertDotoDto(dao.findAll());
+    log.debug("Finding all person");
+    final List<? extends PersonDo> list = dao.findAll();
+    log.debug(list.size() + " persons found");
+    return PersonMapper.convertDotoDto(list);
   }
 
   /* (non-Javadoc)
@@ -97,9 +114,9 @@ public class PersonService implements IPersonService {
   @Override
   public int deleteAllFriends(final PersonDto person) {
     final int nbFriendsDeleted = person.getFriends().size();
-    log.debug("deleteAllFriends - deleting all friend to a " + person + ". " + nbFriendsDeleted
-        + " deleted");
+    log.debug("Deleting all friends to a " + person);
     person.setFriends(new ArrayList<PersonDto>());
+    log.debug(nbFriendsDeleted + " friends deleted");
     updatePerson(person);
     return nbFriendsDeleted;
   }
