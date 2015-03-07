@@ -23,6 +23,7 @@ import dao.IPersonDao;
 import entity.FemmeDo;
 import entity.HommeDo;
 import entity.PersonDo;
+import entity.Sexe;
 
 /**
  * @author Romain
@@ -54,7 +55,7 @@ public class PersonDaoTest {
     Assert.assertNotNull(person);
     Assert.assertNotNull(person.getFriends());
     Assert.assertNotNull(person.getFriendsWith());
-    Assert.assertEquals(person.getSexe(), "H");
+    Assert.assertEquals(person.getSexe(), Sexe.HOMME);
   }
 
   @Test

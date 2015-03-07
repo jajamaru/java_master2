@@ -15,6 +15,7 @@ import presentation.dto.PersonDto;
 import entity.FemmeDo;
 import entity.HommeDo;
 import entity.PersonDo;
+import entity.Sexe;
 
 /**
  * @author Romain
@@ -75,9 +76,9 @@ public class PersonMapper {
    * @return
    */
   private static PersonDo _createDo(final PersonDto dto) {
-    if ("H".equals(dto.getSexe())) {
+    if (Sexe.HOMME.equals(dto.getSexe())) {
       return _createHommeDo(dto);
-    } else if ("F".equals(dto.getSexe())) {
+    } else if (Sexe.FEMME.equals(dto.getSexe())) {
       return _createFemmeDo(dto);
     }
     return null;

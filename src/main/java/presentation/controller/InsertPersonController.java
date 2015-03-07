@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import presentation.model.PersonForm;
 import service.IPersonService;
+import entity.Sexe;
 
 /**
  * @author romain
@@ -56,7 +57,7 @@ public class InsertPersonController {
 
   @ModelAttribute("sexeChoice")
   public List<String> getSexe() {
-    return Arrays.asList("H", "F");
+    return Arrays.asList(Sexe.Values.HOMME, Sexe.Values.FEMME);
   }
 
   private void _persistPerson(final PersonForm form) {

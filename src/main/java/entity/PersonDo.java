@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.DiscriminatorOptions;
 
 /**
  * @author romain
@@ -51,8 +55,9 @@ public abstract class PersonDo {
   @Column(name = "birthday")
   private Date           birthday;
 
+  @Enumerated(EnumType.STRING)
   @Column(name = "sexe", insertable = false, updatable = false, nullable = false)
-  private String         sexe;
+  private Sexe           sexe;
 
   @JoinTable(name = "friend", joinColumns = { @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false) })
   @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
@@ -64,14 +69,14 @@ public abstract class PersonDo {
   /**
    * @return the sexe
    */
-  public String getSexe() {
+  public Sexe getSexe() {
     return sexe;
   }
 
   /**
    * @param sexe the sexe to set
    */
-  public void setSexe(final String sexe) {
+  public void setSexe(final Sexe sexe) {
     this.sexe = sexe;
   }
 

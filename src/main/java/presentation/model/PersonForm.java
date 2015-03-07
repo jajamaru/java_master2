@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import entity.Sexe;
+
 /**
  * @author Romain
  *
@@ -26,7 +28,7 @@ public class PersonForm {
   private String  name;
 
   @NotNull
-  private String  sexe;
+  private Sexe    sexe;
 
   @NotNull
   @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -36,14 +38,14 @@ public class PersonForm {
   /**
    * @return the sexe
    */
-  public String getSexe() {
+  public Sexe getSexe() {
     return sexe;
   }
 
   /**
    * @param sexe the sexe to set
    */
-  public void setSexe(final String sexe) {
+  public void setSexe(final Sexe sexe) {
     this.sexe = sexe;
   }
 

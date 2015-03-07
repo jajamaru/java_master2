@@ -11,7 +11,7 @@ import javax.persistence.Entity;
  *
  */
 @Entity
-@DiscriminatorValue("H")
+@DiscriminatorValue(Sexe.Values.HOMME)
 public class HommeDo extends PersonDo {
 
   /* (non-Javadoc)

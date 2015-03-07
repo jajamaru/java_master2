@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `PERSON` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
 	`birthday` DATE NOT NULL,
-	`sexe` ENUM('H', 'F'),
+	`sexe` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
 PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci AUTO_INCREMENT=1;
 

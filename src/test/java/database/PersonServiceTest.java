@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import presentation.dto.PersonDto;
 import service.IPersonService;
+import entity.Sexe;
 
 /**
  * @author romain
@@ -47,21 +48,21 @@ public class PersonServiceTest {
     Assert.assertNotNull(service.findPerson(1));
     Assert.assertNotNull(service.findPerson(1).getFriends());
     Assert.assertEquals(service.findPerson(1).getFriends().size(), 2);
-    Assert.assertEquals(service.findPerson(1).getSexe(), "H");
+    Assert.assertEquals(service.findPerson(1).getSexe(), Sexe.HOMME);
 
     Assert.assertNotNull(service.findPerson(2));
     Assert.assertNotNull(service.findPerson(2).getFriends());
     Assert.assertEquals(service.findPerson(2).getFriends().size(), 2);
-    Assert.assertEquals(service.findPerson(2).getSexe(), "F");
+    Assert.assertEquals(service.findPerson(2).getSexe(), Sexe.FEMME);
 
     Assert.assertNotNull(service.findPerson(3));
     Assert.assertNotNull(service.findPerson(3).getFriends());
     Assert.assertEquals(service.findPerson(3).getFriends().size(), 1);
-    Assert.assertEquals(service.findPerson(3).getSexe(), "H");
+    Assert.assertEquals(service.findPerson(3).getSexe(), Sexe.HOMME);
 
     Assert.assertNotNull(service.findPerson(5));
     Assert.assertEquals(service.findPerson(5).getFriends().size(), 0);
-    Assert.assertEquals(service.findPerson(5).getSexe(), "H");
+    Assert.assertEquals(service.findPerson(5).getSexe(), Sexe.HOMME);
   }
 
   @Test
@@ -69,7 +70,7 @@ public class PersonServiceTest {
     final PersonDto dto = new PersonDto();
     dto.setName("truc");
     dto.setBirthday(Date.valueOf("2003-01-01"));
-    dto.setSexe("H");
+    dto.setSexe(Sexe.HOMME);
     service.createPerson(dto);
     Assert.assertEquals(service.findAllPerson().size(), 6);
   }

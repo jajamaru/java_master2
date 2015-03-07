@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import entity.Sexe;
+
 /**
  * @author romain
  *
@@ -19,7 +21,7 @@ public class PersonXml {
 
   private String  name;
 
-  private String  sexe;
+  private Sexe    sexe;
 
   private Date    birthday;
 
@@ -27,14 +29,14 @@ public class PersonXml {
    * @return the sexe
    */
   @XmlAttribute
-  public String getSexe() {
+  public Sexe getSexe() {
     return sexe;
   }
 
   /**
    * @param sexe the sexe to set
    */
-  public void setSexe(final String sexe) {
+  public void setSexe(final Sexe sexe) {
     this.sexe = sexe;
   }
 

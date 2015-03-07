@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import entity.Sexe;
+
 /**
  * @author romain
  *
@@ -15,20 +17,20 @@ public class PersonJson {
 
   private Integer id;
   private String  name;
-  private String  sexe;
+  private Sexe    sexe;
   private Date    birthday;
 
   /**
    * @return the sexe
    */
-  public String getSexe() {
+  public Sexe getSexe() {
     return sexe;
   }
 
   /**
    * @param sexe the sexe to set
    */
-  public void setSexe(final String sexe) {
+  public void setSexe(final Sexe sexe) {
     this.sexe = sexe;
   }
 

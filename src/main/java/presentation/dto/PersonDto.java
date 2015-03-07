@@ -6,6 +6,8 @@ package presentation.dto;
 import java.util.Date;
 import java.util.List;
 
+import entity.Sexe;
+
 /**
  * @author romain
  *
@@ -15,20 +17,20 @@ public class PersonDto {
   private Integer         id;
   private String          name;
   private Date            birthday;
-  private String          sexe;
+  private Sexe            sexe;
   private List<PersonDto> friends;
 
   /**
    * @return the sexe
    */
-  public String getSexe() {
+  public Sexe getSexe() {
     return sexe;
   }
 
   /**
    * @param sexe the sexe to set
    */
-  public void setSexe(final String sexe) {
+  public void setSexe(final Sexe sexe) {
     this.sexe = sexe;
   }
 
