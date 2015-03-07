@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -16,10 +16,28 @@
 	<form:form _method="POST" commandName="friendList">
 		<input type="hidden" name="_method" value="put" />
 		<form:errors path="*" element="div" />
-		<form:hidden path="person.id"/>
-		<form:hidden path="person.name"/>
-		<form:hidden path="person.birthday"/>
-		<form:hidden path="person.sexe"/>
+		<form:hidden path="person.id" />
+		<div class="form">
+			<form:label path="person.name">
+				<spring:message code="form.person.name" />
+			</form:label>
+			<form:input path="person.name" />
+			<span class="form-error"><form:errors path="person.name" /></span>
+		</div>
+		<div class="form">
+			<form:label path="person.birthday">
+				<spring:message code="form.person.birthday" />
+			</form:label>
+			<form:input path="person.birthday" />
+			<span class="form-error"><form:errors path="person.birthday" /></span>
+		</div>
+		<div class="form">
+			<form:label path="person.sexe">
+				<spring:message code="form.person.sexe" />
+			</form:label>
+			<form:input path="person.sexe" readonly="true" />
+			<span class="form-error"><form:errors path="person.sexe" /></span>
+		</div>
 		<table>
 			<thead>
 				<tr>
@@ -43,13 +61,13 @@
 								readonly="true" /> <form:errors
 								path="friends[${st.index}].person.sexe" /></td>
 					</tr>
-					<form:hidden path="friends[${st.index}].person.birthday"/>
+					<form:hidden path="friends[${st.index}].person.birthday" />
 				</c:forEach>
 			</tbody>
 		</table>
 		<div class="form">
 			<input type="submit"
-				value="<spring:message code="submit.addFriend" />" />
+				value="<spring:message code="submit.update" />" />
 		</div>
 	</form:form>
 </body>
