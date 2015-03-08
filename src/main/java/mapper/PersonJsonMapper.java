@@ -18,16 +18,21 @@ public class PersonJsonMapper {
   public static PersonJson[] getPersonInJson(final List<? extends PersonDto> list) {
     final List<PersonJson> tab = new ArrayList<PersonJson>();
     for (PersonDto person : list) {
-      final PersonJson json = new PersonJson();
-      json.setId(person.getId());
-      json.setName(person.getName());
-      json.setBirthday(person.getBirthday());
-      json.setSexe(person.getSexe());
+      final PersonJson json = _createPersonJson(person);
       tab.add(json);
     }
     final PersonJson[] tabDto = new PersonJson[tab.size()];
     tab.toArray(tabDto);
     return tabDto;
+  }
+
+  private static PersonJson _createPersonJson(final PersonDto dto) {
+    final PersonJson json = new PersonJson();
+    json.setId(dto.getId());
+    json.setName(dto.getName());
+    json.setBirthday(dto.getBirthday());
+    json.setSexe(dto.getSexe());
+    return json;
   }
 
 }
