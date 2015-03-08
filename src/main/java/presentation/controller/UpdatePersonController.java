@@ -5,7 +5,6 @@ package presentation.controller;
 
 import java.util.List;
 
-import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
 import mapper.PersonFormMapper;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import presentation.dto.PersonDto;
 import presentation.model.FriendForm;
 import service.IPersonService;
+import exception.PersonNotFoundException;
 
 /**
  * @author romain
@@ -45,7 +45,7 @@ public class UpdatePersonController {
       final List<PersonDto> allPersons = service.findAllPerson();
       model.addAttribute("friendList", _createFriendForm(dto, allPersons));
       return "personFriends";
-    } catch (final NoResultException e) {
+    } catch (final PersonNotFoundException e) {
       return "404";
     }
   }
@@ -64,7 +64,7 @@ public class UpdatePersonController {
         model.addAttribute("result", "OK");
       }
       return "redirect:/persons";
-    } catch (final NoResultException e) {
+    } catch (final PersonNotFoundException e) {
       return "404";
     }
   }

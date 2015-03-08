@@ -21,6 +21,21 @@ public class PersonDto {
   private Date            birthday;
   private Sexe            sexe;
   private List<PersonDto> friends;
+  private List<PersonDto> friendsWith;
+
+  /**
+   * @return the friendsWith
+   */
+  public final List<PersonDto> getFriendsWith() {
+    return friendsWith;
+  }
+
+  /**
+   * @param friendsWith the friendsWith to set
+   */
+  public final void setFriendsWith(final List<PersonDto> friendsWith) {
+    this.friendsWith = friendsWith;
+  }
 
   /**
    * @return the sexe

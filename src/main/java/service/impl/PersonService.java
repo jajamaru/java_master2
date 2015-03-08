@@ -68,7 +68,7 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#updatePerson(entity.PersonDo)
    */
   @Override
-  public PersonDto updatePerson(final PersonDto dto) {
+  public PersonDto updatePerson(final PersonDto dto) throws PersonNotFoundException {
     log.debug("Updating a person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     try {
@@ -77,8 +77,9 @@ public class PersonService implements IPersonService {
       return dtoMerged;
     } catch (final IllegalArgumentException e) {
       log.error("Empty entity or entity was already deleted before the merging", e);
+      throw new PersonNotFoundException(
+          "Empty entity or entity was already deleted before the merging");
     }
-    return null;
   }
 
   /* (non-Javadoc)

@@ -33,10 +33,14 @@ public class PersonMapper {
   public static PersonDo convertDtoToDo(final PersonDto dto) {
     log.debug("Begin of conversion of " + dto);
     final PersonDo person = _createDo(dto);
+    final MemoryPerson<PersonDo, PersonDto> mem = new MemoryPerson<PersonDo, PersonDto>();
     if (dto.getFriends() != null && !dto.getFriends().isEmpty()) {
       log.debug("Friends conversion" + dto.getFriends().size());
-      final MemoryPerson<PersonDo, PersonDto> mem = new MemoryPerson<PersonDo, PersonDto>();
       person.setFriends(_convertDtotoDo(dto.getFriends(), mem));
+    }
+    if (dto.getFriendsWith() != null && !dto.getFriendsWith().isEmpty()) {
+      log.debug("FriendsWith conversion" + dto.getFriendsWith().size());
+      person.setFriendsWith(_convertDtotoDo(dto.getFriendsWith(), mem));
     }
     log.debug("End of converion " + person);
     return person;
@@ -65,6 +69,9 @@ public class PersonMapper {
         mem.addExplored(itDto);
         if (itDto.getFriends() != null && !itDto.getFriends().isEmpty()) {
           tmpDo.setFriends(_convertDtotoDo(itDto.getFriends(), mem));
+        }
+        if (itDto.getFriendsWith() != null && !itDto.getFriendsWith().isEmpty()) {
+          tmpDo.setFriendsWith(_convertDtotoDo(itDto.getFriendsWith(), mem));
         }
       }
     }
@@ -128,19 +135,21 @@ public class PersonMapper {
     log.debug("Begin of conversion of " + person);
     final PersonDto dto = _createDto(person);
 
-    final List<PersonDto> result = new ArrayList<PersonDto>();
+    final List<PersonDto> friends = new ArrayList<PersonDto>();
+    final List<PersonDto> friendsWith = new ArrayList<PersonDto>();
 
     final MemoryPerson<PersonDto, PersonDo> mem = new MemoryPerson<PersonDto, PersonDo>();
     if (person.getFriends() != null && !person.getFriends().isEmpty()) {
       log.debug("Friend conversion [ getFriends() " + person.getFriends().size() + " ]");
-      result.addAll(_convertDoToDto(person.getFriends(), mem));
+      friends.addAll(_convertDoToDto(person.getFriends(), mem));
     }
     if (person.getFriendsWith() != null && !person.getFriendsWith().isEmpty()) {
       log.debug("Friend conversion [ getFriendsWith() " + person.getFriendsWith().size() + " ]");
-      result.addAll(_convertDoToDto(person.getFriendsWith(), mem));
+      friendsWith.addAll(_convertDoToDto(person.getFriendsWith(), mem));
     }
 
-    dto.setFriends(result);
+    dto.setFriends(friends);
+    dto.setFriendsWith(friendsWith);
     log.debug("End of converion " + dto);
     return dto;
   }
@@ -164,15 +173,17 @@ public class PersonMapper {
       result.add(instance);
 
       final List<PersonDto> f = new ArrayList<PersonDto>();
+      final List<PersonDto> fw = new ArrayList<PersonDto>();
       if (!mem.isExplored(itDo)) {
         mem.addExplored(itDo);
         if (itDo.getFriends() != null && !itDo.getFriends().isEmpty()) {
           f.addAll(_convertDoToDto(itDo.getFriends(), mem));
         }
         if (itDo.getFriendsWith() != null && !itDo.getFriendsWith().isEmpty()) {
-          f.addAll(_convertDoToDto(itDo.getFriendsWith(), mem));
+          fw.addAll(_convertDoToDto(itDo.getFriendsWith(), mem));
         }
         tmpDto.setFriends(f);
+        tmpDto.setFriendsWith(fw);
       }
 
     }

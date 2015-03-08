@@ -18,6 +18,23 @@ public class FriendForm {
 
   @Valid
   private List<Friend> friends;
+  
+  @Valid
+  private List<Friend> friendsWith;
+
+  /**
+   * @return the friendsWith
+   */
+  public final List<Friend> getFriendsWith() {
+    return friendsWith;
+  }
+
+  /**
+   * @param friendsWith the friendsWith to set
+   */
+  public final void setFriendsWith(final List<Friend> friendsWith) {
+    this.friendsWith = friendsWith;
+  }
 
   /**
    * @return the friends

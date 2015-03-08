@@ -63,6 +63,21 @@
 					</tr>
 					<form:hidden path="friends[${st.index}].person.birthday" />
 				</c:forEach>
+				<c:forEach items="${friendList.friendsWith}" varStatus="st">
+					<tr>
+						<td><form:checkbox path="friendsWith[${st.index}].friendShip" /></td>
+						<td><form:input path="friendsWith[${st.index}].person.id"
+								readonly="true" /> <form:errors
+								path="friendsWith[${st.index}].person.id" /></td>
+						<td><form:input path="friendsWith[${st.index}].person.name"
+								readonly="true" /> <form:errors
+								path="friendsWith[${st.index}].person.name" /></td>
+						<td><form:input path="friendsWith[${st.index}].person.sexe"
+								readonly="true" /> <form:errors
+								path="friendsWith[${st.index}].person.sexe" /></td>
+					</tr>
+					<form:hidden path="friendsWith[${st.index}].person.birthday" />
+				</c:forEach>
 			</tbody>
 		</table>
 		<div class="form">

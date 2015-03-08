@@ -5,12 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="<c:url value="resources/css/home.css" />" rel="stylesheet" />
-<link href="<c:url value="resources/css/person.css" />" rel="stylesheet" />
-<link href="<c:url value="resources/css/form.css" />" rel="stylesheet" />
+<title><spring:message code="title.notFound" /></title>
 </head>
 <body>
-	<h1>Entity is not existed !</h1>
+	<h1>Entity doesn't exist !</h1>
 </body>
 </html>

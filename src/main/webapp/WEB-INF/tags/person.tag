@@ -58,6 +58,19 @@
 					</td>
 				</tr>
 			</c:forEach>
+			<c:forEach var="f" items="${person.friendsWith}">
+				<tr>
+					<td><c:out value="${f.id}" /></td>
+					<td>
+						<form:form action="/persons/${person.id}/friends/${f.id}" _method="POST">
+							<input type="hidden" name="_method" value="delete" />
+							<div class="form">
+								<input type="submit" value="<spring:message code="submit.delete" />" />
+							</div>
+						</form:form>
+					</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </article>

@@ -53,7 +53,7 @@ public interface IPersonService {
    * @param person Person to update
    * @return the personDto merged
    */
-  PersonDto updatePerson(final PersonDto person);
+  PersonDto updatePerson(final PersonDto person) throws PersonNotFoundException;
 
   /**
    * Retrieve a person by id
