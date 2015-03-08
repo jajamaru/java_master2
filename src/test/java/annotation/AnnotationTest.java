@@ -5,6 +5,7 @@ package annotation;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -75,6 +76,7 @@ public class AnnotationTest {
 }
 
 @Pojo
+@Entity
 class PojoAnnotationDo {
 
   private boolean b;

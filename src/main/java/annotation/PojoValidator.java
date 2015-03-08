@@ -3,6 +3,7 @@
  */
 package annotation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -49,6 +51,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
 
     final boolean validCompleteName = _isOnlyClass(cl) && _isValidName(cl.getSimpleName())
         && _isValidPackageName(cl);
+    final boolean validDoWithEntity = _doOnlyWithEntity(cl);
     final boolean validAttributes = _allPrivateAttributs(cl.getDeclaredFields());
     final boolean validAllAttributes = _gettersAndSettersForAll(cl.getDeclaredFields(),
         gettersAndSetters);
@@ -58,12 +61,16 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     if (!validCompleteName) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
     }
+    if (!validDoWithEntity) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.missing.entity}")
+          .addConstraintViolation();
+    }
     if (!validAttributes) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attirubt.private}")
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.private}")
           .addConstraintViolation();
     }
     if (!validAllAttributes) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attirubt.getter}")
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.getter}")
           .addConstraintViolation();
     }
     if (!validPublicGetter) {
@@ -75,8 +82,8 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
           .addConstraintViolation();
     }
 
-    return validCompleteName && validAttributes && validAllAttributes && validPublicGetter
-        && validPublicGetter;
+    return validCompleteName && validDoWithEntity && validAttributes && validAllAttributes
+        && validPublicGetter && validProcessing;
   }
 
   private boolean _isValidName(final String name) {
@@ -96,6 +103,18 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
 
   private boolean _isOnlyClass(final Class<?> clazz) {
     return !(clazz.isAnnotation() || clazz.isInterface() || clazz.isEnum());
+  }
+
+  private boolean _doOnlyWithEntity(final Class<?> clazz) {
+    if (clazz.getSimpleName().endsWith(DO_SUFFIXE)) {
+      for (final Annotation a : clazz.getAnnotations()) {
+        if (a instanceof Entity) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return true;
   }
 
   private boolean _allPrivateAttributs(final Field[] fields) {
