@@ -15,6 +15,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import presentation.dto.PersonDto;
 import entity.HommeDo;
 import entity.PersonDo;
 
@@ -51,6 +52,19 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PersonDo>> ctv = validator.validate(person);
     for (final ConstraintViolation<PersonDo> cv : ctv) {
+      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
+          + cv.getMessage());
+    }
+
+    Assert.assertTrue(ctv.isEmpty());
+  }
+
+  @Test
+  public void PersonDtoTest() {
+    final PersonDto person = new PersonDto();
+
+    final Set<ConstraintViolation<PersonDto>> ctv = validator.validate(person);
+    for (final ConstraintViolation<PersonDto> cv : ctv) {
       System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }

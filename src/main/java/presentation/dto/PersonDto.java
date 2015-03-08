@@ -6,12 +6,14 @@ package presentation.dto;
 import java.util.Date;
 import java.util.List;
 
+import annotation.Pojo;
 import entity.Sexe;
 
 /**
  * @author romain
  *
  */
+@Pojo
 public class PersonDto {
 
   private Integer         id;
