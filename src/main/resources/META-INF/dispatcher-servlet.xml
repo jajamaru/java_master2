@@ -12,6 +12,7 @@
    
    <mvc:annotation-driven />
    <context:component-scan base-package="presentation" />
+   
    <mvc:resources mapping="/resources/**" location="/resources/theme/" />
 
 	<bean id="messageSource"
