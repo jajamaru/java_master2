@@ -49,16 +49,41 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
 
     final boolean validCompleteName = _isOnlyClass(cl) && _isValidName(cl.getSimpleName())
         && _isValidPackageName(cl);
-    return validCompleteName && _allPrivateAttributs(cl.getDeclaredFields())
-        && _gettersAndSettersForAll(cl.getDeclaredFields(), gettersAndSetters)
-        && _gettersAndSettersArePublic(gettersAndSetters) && _noProcessing(cl.getDeclaredMethods());
+    final boolean validAttributes = _allPrivateAttributs(cl.getDeclaredFields());
+    final boolean validAllAttributes = _gettersAndSettersForAll(cl.getDeclaredFields(),
+        gettersAndSetters);
+    final boolean validPublicGetter = _gettersAndSettersArePublic(gettersAndSetters);
+    final boolean validProcessing = _noProcessing(cl.getDeclaredMethods());
+
+    if (!validCompleteName) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
+    }
+    if (!validAttributes) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attirubt.private}")
+          .addConstraintViolation();
+    }
+    if (!validAllAttributes) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attirubt.getter}")
+          .addConstraintViolation();
+    }
+    if (!validPublicGetter) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.getter.public}")
+          .addConstraintViolation();
+    }
+    if (!validProcessing) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.processing}")
+          .addConstraintViolation();
+    }
+
+    return validCompleteName && validAttributes && validAllAttributes && validPublicGetter
+        && validPublicGetter;
   }
 
   private boolean _isValidName(final String name) {
     return name.length() > 1 && (name.endsWith(DO_SUFFIXE) || name.endsWith(DTO_SUFFIXE))
         && Character.isUpperCase(name.charAt(0));
   }
-  
+
   private boolean _isValidPackageName(final Class<?> clazz) {
     if (clazz.getPackage() == null) {
       return false;
@@ -139,5 +164,5 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     }
     return true;
   }
-  
+
 }

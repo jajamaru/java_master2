@@ -38,7 +38,7 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PojoAnnotationDo>> ctv = validator.validate(test);
     for (final ConstraintViolation<PojoAnnotationDo> cv : ctv) {
-      System.out.println(cv.getRootBeanClass().getSimpleName() + "." + cv.getPropertyPath() + " "
+      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }
 
@@ -51,7 +51,7 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PersonDo>> ctv = validator.validate(person);
     for (final ConstraintViolation<PersonDo> cv : ctv) {
-      System.out.println(cv.getRootBeanClass().getSimpleName() + "." + cv.getPropertyPath() + " "
+      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }
 
