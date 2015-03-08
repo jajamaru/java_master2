@@ -40,6 +40,9 @@
 		<version.openejb>6.0-6</version.openejb>
 		<version.jstl>1.2</version.jstl>
 		<version.log4j>1.2.17</version.log4j>
+		<version.el>2.2</version.el>
+		<version.el-impl>1.0</version.el-impl>
+		<version.apache-commons>3.3.2</version.apache-commons>
 
 		<!-- Jdk version to compile -->
 		<version.jdk>1.7</version.jdk>
@@ -109,6 +112,16 @@
 			<version>1.7.2</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>${version.el}</version>
+		</dependency>
+		<dependency>
+			<groupId>el-impl</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>${version.el-impl}</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${version.servlet}</version>
@@ -129,6 +142,13 @@
 			<artifactId>geronimo-osgi-locator</artifactId>
 			<version>1.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${version.apache-commons}</version>
+		</dependency>
+
 
 		<!-- Jackson JSON Mapper -->
 		<dependency>

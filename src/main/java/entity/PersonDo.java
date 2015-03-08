@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DiscriminatorOptions;
+import annotation.Pojo;
 
 /**
  * @author romain
@@ -42,6 +42,7 @@ import org.hibernate.annotations.DiscriminatorOptions;
     @NamedQuery(name = "PersonDo.findAll", query = "SELECT p FROM PersonDo p"),
     @NamedQuery(name = "PersonDo.delete", query = "DELETE FROM PersonDo WHERE id = :id"),
     @NamedQuery(name = "PersonDo.deleteAll", query = "DELETE FROM PersonDo") })
+@Pojo
 public abstract class PersonDo {
 
   @Id
