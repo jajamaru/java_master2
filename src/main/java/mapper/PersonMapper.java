@@ -23,11 +23,11 @@ import entity.Sexe;
  */
 public class PersonMapper {
 
+  private static final Logger LOGGER = Logger.getLogger(PersonMapper.class);
+
   private PersonMapper() {
     //empty constructor
   }
-
-  private static final Logger LOGGER = Logger.getLogger(PersonMapper.class);
 
   /**
    * Convert a PersonDto object to PersonDo object
