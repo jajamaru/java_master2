@@ -26,7 +26,7 @@ import entity.PersonDo;
 @Transactional(propagation = Propagation.MANDATORY)
 public class PersonDao extends IPersonDao {
 
-  private static final Logger log = Logger.getLogger(PersonDao.class);
+  private static final Logger LOGGER = Logger.getLogger(PersonDao.class);
 
   @PersistenceContext(unitName = "pu")
   private EntityManager       entityManager;
@@ -36,7 +36,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public PersonDo find(final int id) {
-    log.debug("Retrieving a person with id " + id);
+    LOGGER.debug("Retrieving a person with id " + id);
     final TypedQuery<? extends PersonDo> query = entityManager.createNamedQuery("PersonDo.find",
         PersonDo.class);
     query.setParameter("id", id);
@@ -48,7 +48,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public List<? extends PersonDo> findAll() {
-    log.debug("Retrieving all persons");
+    LOGGER.debug("Retrieving all persons");
     final TypedQuery<PersonDo> query = entityManager.createNamedQuery("PersonDo.findAll",
         PersonDo.class);
     return query.getResultList();
@@ -59,7 +59,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public PersonDo update(final PersonDo obj) {
-    log.debug("Updating a person " + obj);
+    LOGGER.debug("Updating a person " + obj);
     return entityManager.merge(obj);
   }
 
@@ -68,7 +68,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public int delete(final int id) {
-    log.debug("Deleting a person with id " + id);
+    LOGGER.debug("Deleting a person with id " + id);
     final Query query = entityManager.createNamedQuery("PersonDo.delete");
     query.setParameter("id", id);
     return query.executeUpdate();
@@ -79,7 +79,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public int deleteAll() {
-    log.debug("Deleting all persons");
+    LOGGER.debug("Deleting all persons");
     final Query query = entityManager.createNamedQuery("PersonDo.deleteAll");
     return query.executeUpdate();
   }
@@ -89,7 +89,7 @@ public class PersonDao extends IPersonDao {
    */
   @Override
   public <U extends PersonDo> void create(final U obj) {
-    log.debug("Creating a person " + obj);
+    LOGGER.debug("Creating a person " + obj);
     entityManager.persist(obj);
   }
 

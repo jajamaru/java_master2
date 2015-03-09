@@ -27,7 +27,7 @@ public class PersonMapper {
     //empty constructor
   }
 
-  private static final Logger log = Logger.getLogger(PersonMapper.class);
+  private static final Logger LOGGER = Logger.getLogger(PersonMapper.class);
 
   /**
    * Convert a PersonDto object to PersonDo object
@@ -35,18 +35,18 @@ public class PersonMapper {
    * @return PersonDo object
    */
   public static PersonDo convertDtoToDo(final PersonDto dto) {
-    log.debug("Begin of conversion of " + dto);
+    LOGGER.debug("Begin of conversion of " + dto);
     final PersonDo person = createDo(dto);
     final MemoryPerson<PersonDo, PersonDto> mem = new MemoryPerson<PersonDo, PersonDto>();
     if (dto.getFriends() != null && !dto.getFriends().isEmpty()) {
-      log.debug("Friends conversion" + dto.getFriends().size());
+      LOGGER.debug("Friends conversion" + dto.getFriends().size());
       person.setFriends(convertDtoListtoDoList(dto.getFriends(), mem));
     }
     if (dto.getFriendsWith() != null && !dto.getFriendsWith().isEmpty()) {
-      log.debug("FriendsWith conversion" + dto.getFriendsWith().size());
+      LOGGER.debug("FriendsWith conversion" + dto.getFriendsWith().size());
       person.setFriendsWith(convertDtoListtoDoList(dto.getFriendsWith(), mem));
     }
-    log.debug("End of converion " + person);
+    LOGGER.debug("End of converion " + person);
     return person;
   }
 
@@ -59,7 +59,7 @@ public class PersonMapper {
       final List<? extends PersonDto> listPersonDto, final MemoryPerson<PersonDo, PersonDto> mem) {
     final List<PersonDo> list = new ArrayList<PersonDo>();
     for (final PersonDto itDto : listPersonDto) {
-      log.debug("Friend conversion " + itDto);
+      LOGGER.debug("Friend conversion " + itDto);
       final PersonDo tmpDo = createDo(itDto);
 
       if (!mem.isInstanciated(tmpDo)) {
@@ -96,22 +96,22 @@ public class PersonMapper {
   }
 
   private static HommeDo createHommeDo(final PersonDto dto) {
-    log.debug("Creating a HommeDo object with " + dto);
+    LOGGER.debug("Creating a HommeDo object with " + dto);
     final HommeDo homme = new HommeDo();
     homme.setBirthday(dto.getBirthday());
     homme.setName(dto.getName());
     homme.setId(dto.getId());
-    log.debug("HommeDo created " + homme);
+    LOGGER.debug("HommeDo created " + homme);
     return homme;
   }
 
   private static FemmeDo createFemmeDo(final PersonDto dto) {
-    log.debug("Creating a FemmeDo object with " + dto);
+    LOGGER.debug("Creating a FemmeDo object with " + dto);
     final FemmeDo femme = new FemmeDo();
     femme.setBirthday(dto.getBirthday());
     femme.setName(dto.getName());
     femme.setId(dto.getId());
-    log.debug("FemmeDo created " + femme);
+    LOGGER.debug("FemmeDo created " + femme);
     return femme;
   }
 
@@ -120,13 +120,13 @@ public class PersonMapper {
    * @return
    */
   private static PersonDto createDto(final PersonDo person) {
-    log.debug("Creating a PersonDto object with " + person);
+    LOGGER.debug("Creating a PersonDto object with " + person);
     final PersonDto dto = new PersonDto();
     dto.setBirthday(person.getBirthday());
     dto.setName(person.getName());
     dto.setId(person.getId());
     dto.setSexe(person.getSexe());
-    log.debug("PersonDto created " + dto);
+    LOGGER.debug("PersonDto created " + dto);
     return dto;
   }
 
@@ -136,7 +136,7 @@ public class PersonMapper {
    * @return PersonDto object
    */
   public static PersonDto convertDotoDto(final PersonDo person) {
-    log.debug("Begin of conversion of " + person);
+    LOGGER.debug("Begin of conversion of " + person);
     final PersonDto dto = createDto(person);
 
     final List<PersonDto> friends = new ArrayList<PersonDto>();
@@ -144,17 +144,17 @@ public class PersonMapper {
 
     final MemoryPerson<PersonDto, PersonDo> mem = new MemoryPerson<PersonDto, PersonDo>();
     if (person.getFriends() != null && !person.getFriends().isEmpty()) {
-      log.debug("Friend conversion [ getFriends() " + person.getFriends().size() + " ]");
+      LOGGER.debug("Friend conversion [ getFriends() " + person.getFriends().size() + " ]");
       friends.addAll(convertDoListToDtoList(person.getFriends(), mem));
     }
     if (person.getFriendsWith() != null && !person.getFriendsWith().isEmpty()) {
-      log.debug("Friend conversion [ getFriendsWith() " + person.getFriendsWith().size() + " ]");
+      LOGGER.debug("Friend conversion [ getFriendsWith() " + person.getFriendsWith().size() + " ]");
       friendsWith.addAll(convertDoListToDtoList(person.getFriendsWith(), mem));
     }
 
     dto.setFriends(friends);
     dto.setFriendsWith(friendsWith);
-    log.debug("End of converion " + dto);
+    LOGGER.debug("End of converion " + dto);
     return dto;
   }
 
@@ -166,7 +166,7 @@ public class PersonMapper {
       final MemoryPerson<PersonDto, PersonDo> mem) {
     final List<PersonDto> result = new ArrayList<PersonDto>();
     for (final PersonDo itDo : friends) {
-      log.debug("Friend conversion " + itDo);
+      LOGGER.debug("Friend conversion " + itDo);
       final PersonDto tmpDto = createDto(itDo);
 
       if (!mem.isInstanciated(tmpDto)) {
@@ -200,12 +200,12 @@ public class PersonMapper {
    * @return List of PersonDto
    */
   public static List<PersonDto> convertDotoDto(final List<? extends PersonDo> listPersonDo) {
-    log.debug("Begin of list conversion " + listPersonDo.size());
+    LOGGER.debug("Begin of list conversion " + listPersonDo.size());
     final List<PersonDto> list = new ArrayList<PersonDto>();
     for (final PersonDo itDo : listPersonDo) {
       list.add(convertDotoDto(itDo));
     }
-    log.debug("End of list conversion " + list);
+    LOGGER.debug("End of list conversion " + list);
     return list;
   }
 
