@@ -175,10 +175,8 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     final List<String> processingAllowed = Arrays.asList(PROCESSING_ALLOWED);
     for (final Method m : methods) {
       if (!(m.getName().startsWith(GETTER_BOOLEAN_PREFIX) || m.getName().startsWith(GETTER_PREFIX) || m
-          .getName().startsWith(SETTER_PREFIX))) {
-        if (!processingAllowed.contains(m.getName())) {
-          return false;
-        }
+          .getName().startsWith(SETTER_PREFIX)) && !processingAllowed.contains(m.getName())) {
+        return false;
       }
     }
     return true;

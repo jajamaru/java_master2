@@ -209,8 +209,8 @@ public abstract class PersonDo {
   @Override
   public String toString() {
     return "PersonDo [id=" + id + ", name=" + name + ", birthday=" + birthday + ", sexe=" + sexe
-        + ", friends=" + ((friends != null) ? (friends.size()) : 0) + ", friendsWith="
-        + ((friendsWith != null) ? (friendsWith.size()) : 0) + "]";
+        + ", friends=" + (friends != null ? friends.size() : 0) + ", friendsWith="
+        + (friendsWith != null ? friendsWith.size() : 0) + "]";
   }
 
 }

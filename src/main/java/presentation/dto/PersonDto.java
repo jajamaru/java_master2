@@ -166,7 +166,7 @@ public class PersonDto {
   @Override
   public String toString() {
     return "PersonDto [id=" + id + ", name=" + name + ", birthday=" + birthday + ", sexe=" + sexe
-        + ", friends=" + ((friends != null) ? (friends.size()) : 0) + "]";
+        + ", friends=" + (friends != null ? friends.size() : 0) + "]";
   }
 
 }
