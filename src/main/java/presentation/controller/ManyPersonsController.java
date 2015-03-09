@@ -44,7 +44,7 @@ public class ManyPersonsController {
   }
 
   @ResponseBody
-  @RequestMapping(value = "/json", method = RequestMethod.GET)
+  @RequestMapping(value = "/json", method = RequestMethod.GET, produces = "application/json")
   public String getListPersonWithReturnTypeJson() throws JsonGenerationException,
       JsonMappingException, IOException {
     final List<? extends PersonDto> list = service.findAllPerson();
@@ -53,7 +53,7 @@ public class ManyPersonsController {
   }
 
   @ResponseBody
-  @RequestMapping(value = "/xml", method = RequestMethod.GET)
+  @RequestMapping(value = "/xml", method = RequestMethod.GET, produces = "application/xml")
   public PersonListXml getListPersonWithReturnTypeXml() {
     final List<? extends PersonDto> list = service.findAllPerson();
     return _getPersonInXml(list);
