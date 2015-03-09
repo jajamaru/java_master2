@@ -1,5 +1,7 @@
 Auteur Romain Huret
 
+Repository git : https://github.com/jajamaru/java_master2/tree/PersonAbstract
+
 Conseil d'utilisation
 ---------------------
 
