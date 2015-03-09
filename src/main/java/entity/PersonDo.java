@@ -35,6 +35,8 @@ import annotation.Pojo;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "sexe", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "PERSON")
 @NamedQueries({
@@ -49,6 +51,7 @@ public abstract class PersonDo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  //  @GeneratedValue(strategy = GenerationType.TABLE)
   private Integer         id;
 
   @Column(name = "name", nullable = false)
