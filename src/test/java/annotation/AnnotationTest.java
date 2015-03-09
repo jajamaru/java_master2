@@ -13,6 +13,7 @@ import javax.validation.ValidatorFactory;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +27,8 @@ import entity.PersonDo;
  */
 public class AnnotationTest {
 
-  private Validator validator;
+  private Validator     validator;
+  private static Logger log = Logger.getLogger(AnnotationTest.class);
 
   @Before
   public void init() {
@@ -40,7 +42,7 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PojoAnnotationDo>> ctv = validator.validate(test);
     for (final ConstraintViolation<PojoAnnotationDo> cv : ctv) {
-      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
+      log.debug(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }
 
@@ -53,7 +55,7 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PersonDo>> ctv = validator.validate(person);
     for (final ConstraintViolation<PersonDo> cv : ctv) {
-      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
+      log.debug(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }
 
@@ -66,7 +68,7 @@ public class AnnotationTest {
 
     final Set<ConstraintViolation<PersonDto>> ctv = validator.validate(person);
     for (final ConstraintViolation<PersonDto> cv : ctv) {
-      System.out.println(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
+      log.debug(cv.getRootBeanClass().getSimpleName() + " ." + cv.getPropertyPath() + " "
           + cv.getMessage());
     }
 
