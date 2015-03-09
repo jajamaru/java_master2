@@ -59,28 +59,27 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     final boolean validProcessing = noProcessing(cl.getDeclaredMethods());
 
     if (!validAttributes || !validAllAttributes || !validPublicGetter) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.private}")
-          .addConstraintViolation();
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.getter}")
-          .addConstraintViolation();
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.getter.public}")
-          .addConstraintViolation();
+      addErrorMessageProperties("{pojo.message.error.attribut.private}", cv);
+      addErrorMessageProperties("{pojo.message.error.attribut.getter}", cv);
+      addErrorMessageProperties("{pojo.message.error.getter.public}", cv);
       return false;
     }
 
     if (!validCompleteName) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
+      addErrorMessageProperties("{pojo.message.error.name}", cv);
     }
     if (!validProcessing) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.processing}")
-          .addConstraintViolation();
+      addErrorMessageProperties("{pojo.message.error.processing}", cv);
     }
     if (!validDoWithEntity) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.missing.entity}")
-          .addConstraintViolation();
+      addErrorMessageProperties("{pojo.message.error.missing.entity}", cv);
     }
 
     return validCompleteName && validDoWithEntity && validProcessing;
+  }
+
+  private void addErrorMessageProperties(final String message, final ConstraintValidatorContext cv) {
+    cv.buildConstraintViolationWithTemplate(message).addConstraintViolation();
   }
 
   private boolean isValidName(final String name) {
