@@ -16,13 +16,14 @@ import entity.Sexe;
 @Pojo
 public class PersonDto {
 
+  public static final int PRIME = 31;
+
   private Integer         id;
   private String          name;
   private Date            birthday;
   private Sexe            sexe;
   private List<PersonDto> friends;
   private List<PersonDto> friendsWith;
-  
 
   /**
    * @return the friendsWith
@@ -113,7 +114,7 @@ public class PersonDto {
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
+    final int prime = PRIME;
     int result = 1;
     result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
     result = prime * result + ((id == null) ? 0 : id.hashCode());

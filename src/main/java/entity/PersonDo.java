@@ -45,27 +45,29 @@ import annotation.Pojo;
 @Pojo
 public abstract class PersonDo {
 
+  public static final int PRIME = 31;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer        id;
+  private Integer         id;
 
   @Column(name = "name", nullable = false)
-  private String         name;
+  private String          name;
 
   @Temporal(TemporalType.DATE)
   @Column(name = "birthday")
-  private Date           birthday;
+  private Date            birthday;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "sexe", insertable = false, updatable = false, nullable = false)
-  private Sexe           sexe;
+  private Sexe            sexe;
 
   @JoinTable(name = "friend", joinColumns = { @JoinColumn(name = "idPerson", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "idFriend", referencedColumnName = "id", nullable = false) })
   @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
-  private List<PersonDo> friends;
+  private List<PersonDo>  friends;
 
   @ManyToMany(mappedBy = "friends", cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
-  private List<PersonDo> friendsWith;
+  private List<PersonDo>  friendsWith;
 
   /**
    * @return the sexe
@@ -156,7 +158,7 @@ public abstract class PersonDo {
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
+    final int prime = PRIME;
     int result = 1;
     result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
     result = prime * result + ((id == null) ? 0 : id.hashCode());
