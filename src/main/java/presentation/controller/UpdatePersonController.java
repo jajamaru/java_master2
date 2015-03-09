@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import mapper.PersonFormMapper;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,9 +34,11 @@ import exception.PersonNotFoundException;
 @RequestMapping("/persons")
 public class UpdatePersonController {
 
+  private static final Logger LOGGER = Logger.getLogger(UpdatePersonController.class);
+
   @Autowired
   @Qualifier("personService")
-  private IPersonService service;
+  private IPersonService      service;
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public String getFriendPerson(final Model model, @PathVariable
@@ -46,6 +49,7 @@ public class UpdatePersonController {
       model.addAttribute("friendList", createFriendForm(dto, allPersons));
       return "personFriends";
     } catch (final PersonNotFoundException e) {
+      LOGGER.error("Person not found ", e);
       return "404";
     }
   }
@@ -57,6 +61,7 @@ public class UpdatePersonController {
   final Integer id) {
 
     try {
+      service.findPerson(id);
       if (result.hasErrors()) {
         model.addAttribute("result", "NOK");
       } else {
@@ -65,6 +70,7 @@ public class UpdatePersonController {
       }
       return "redirect:/persons";
     } catch (final PersonNotFoundException e) {
+      LOGGER.error("Person not found ", e);
       return "404";
     }
   }

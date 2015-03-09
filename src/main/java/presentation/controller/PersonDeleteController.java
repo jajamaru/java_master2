@@ -3,10 +3,10 @@
  */
 package presentation.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,44 +22,47 @@ import exception.PersonNotFoundException;
 @Controller
 @RequestMapping("/persons")
 public class PersonDeleteController {
-  
+
+  private static final Logger LOGGER   = Logger.getLogger(PersonDeleteController.class);
   private static final String REDIRECT = "redirect:/persons";
 
   @Autowired
   @Qualifier("personService")
-  private IPersonService service;
+  private IPersonService      service;
 
   @RequestMapping(method = RequestMethod.DELETE)
-  public String deleteListPerson(final Model model) {
+  public String deleteListPerson() {
     service.deleteAllPerson();
     return REDIRECT;
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public String deleteSinglePerson(final Model model, @PathVariable
+  public String deleteSinglePerson(@PathVariable
   final Integer id) {
     try {
       service.deletePerson(id);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
+      LOGGER.error("Person not found", e);
       return "404";
     }
   }
 
   @RequestMapping(value = "/{id}/friends", method = RequestMethod.DELETE)
-  public String deleteFriends(final Model model, @PathVariable
+  public String deleteFriends(@PathVariable
   final Integer id) {
     try {
       final PersonDto dto = service.findPerson(id);
       service.deleteAllFriends(dto);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
+      LOGGER.error("Person not found", e);
       return "404";
     }
   }
 
   @RequestMapping(value = "/{id}/friends/{idFriend}", method = RequestMethod.DELETE)
-  public String deleteSingleFriend(final Model model, @PathVariable
+  public String deleteSingleFriend(@PathVariable
   final Integer id, @PathVariable
   final Integer idFriend) {
     try {
@@ -68,6 +71,7 @@ public class PersonDeleteController {
       service.deleteSingleFriend(dto, deleted);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
+      LOGGER.error("Person not found", e);
       return "404";
     }
   }

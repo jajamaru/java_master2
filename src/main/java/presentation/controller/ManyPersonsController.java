@@ -9,8 +9,6 @@ import java.util.List;
 import mapper.PersonJsonMapper;
 import mapper.PersonXmlMapper;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

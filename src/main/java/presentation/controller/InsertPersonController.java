@@ -46,7 +46,7 @@ public class InsertPersonController {
   @RequestMapping(method = RequestMethod.POST)
   public String insertPerson(@Valid
   @ModelAttribute("person")
-  final PersonForm form, final BindingResult result, final ModelMap model) {
+  final PersonForm form, final BindingResult result) {
     if (result.hasErrors()) {
       return "formPerson";
     } else {
