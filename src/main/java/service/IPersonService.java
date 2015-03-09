@@ -6,7 +6,6 @@ package service;
 import java.util.List;
 
 import presentation.dto.PersonDto;
-import exception.PersonNotFoundException;
 
 /**
  * @author Romain

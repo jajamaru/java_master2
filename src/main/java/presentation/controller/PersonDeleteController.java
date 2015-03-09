@@ -23,8 +23,9 @@ import exception.PersonNotFoundException;
 @RequestMapping("/persons")
 public class PersonDeleteController {
 
-  private static final Logger LOGGER   = Logger.getLogger(PersonDeleteController.class);
-  private static final String REDIRECT = "redirect:/persons";
+  private static final Logger LOGGER               = Logger.getLogger(PersonDeleteController.class);
+  private static final String REDIRECT             = "redirect:/persons";
+  private static final String LOG_PERSON_NOT_FOUND = "Person not found";
 
   @Autowired
   @Qualifier("personService")
@@ -43,7 +44,7 @@ public class PersonDeleteController {
       service.deletePerson(id);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
-      LOGGER.error("Person not found", e);
+      LOGGER.error(LOG_PERSON_NOT_FOUND, e);
       return "404";
     }
   }
@@ -56,7 +57,7 @@ public class PersonDeleteController {
       service.deleteAllFriends(dto);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
-      LOGGER.error("Person not found", e);
+      LOGGER.error(LOG_PERSON_NOT_FOUND, e);
       return "404";
     }
   }
@@ -71,7 +72,7 @@ public class PersonDeleteController {
       service.deleteSingleFriend(dto, deleted);
       return REDIRECT;
     } catch (final PersonNotFoundException e) {
-      LOGGER.error("Person not found", e);
+      LOGGER.error(LOG_PERSON_NOT_FOUND, e);
       return "404";
     }
   }
