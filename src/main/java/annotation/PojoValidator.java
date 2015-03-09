@@ -47,18 +47,13 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     }
 
     final Class<?> cl = object.getClass();
-    final Set<Method> gettersAndSetters = getGettersAndSetters(cl.getDeclaredMethods());
 
     final boolean validCompleteName = isOnlyClass(cl) && isValidName(cl.getSimpleName())
         && isValidPackageName(cl);
     final boolean validDoWithEntity = doOnlyWithEntity(cl);
-    final boolean validAttributes = allPrivateAttributs(cl.getDeclaredFields());
-    final boolean validAllAttributes = gettersAndSettersForAll(cl.getDeclaredFields(),
-        gettersAndSetters);
-    final boolean validPublicGetter = gettersAndSettersArePublic(gettersAndSetters);
     final boolean validProcessing = noProcessing(cl.getDeclaredMethods());
 
-    if (!validAttributes || !validAllAttributes || !validPublicGetter) {
+    if (!validAttributeProperties(cl, cv)) {
       addErrorMessageProperties("{pojo.message.error.attribut.private}", cv);
       addErrorMessageProperties("{pojo.message.error.attribut.getter}", cv);
       addErrorMessageProperties("{pojo.message.error.getter.public}", cv);
@@ -76,6 +71,15 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     }
 
     return validCompleteName && validDoWithEntity && validProcessing;
+  }
+
+  private boolean validAttributeProperties(final Class<?> cl, final ConstraintValidatorContext cv) {
+    final Set<Method> gettersAndSetters = getGettersAndSetters(cl.getDeclaredMethods());
+    final boolean validAttributes = allPrivateAttributs(cl.getDeclaredFields());
+    final boolean validAllAttributes = gettersAndSettersForAll(cl.getDeclaredFields(),
+        gettersAndSetters);
+    final boolean validPublicGetter = gettersAndSettersArePublic(gettersAndSetters);
+    return validAttributes && validAllAttributes && validPublicGetter;
   }
 
   private void addErrorMessageProperties(final String message, final ConstraintValidatorContext cv) {
