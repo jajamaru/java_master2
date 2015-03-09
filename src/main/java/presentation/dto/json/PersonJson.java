@@ -73,7 +73,7 @@ public class PersonJson {
   /**
    * @param birthday the birthday to set
    */
-  public void setBirthday(Date birthday) {
+  public void setBirthday(final Date birthday) {
     this.birthday = birthday;
   }
 
