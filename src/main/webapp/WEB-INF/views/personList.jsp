@@ -13,18 +13,13 @@
 <link href="<c:url value="resources/css/form.css" />" rel="stylesheet" />
 </head>
 <body>
-	<c:if test="${not empty result}">
-		<c:if test="${result eq 'OK'}">
-			<span class="success">
-				<spring:message code="request.result.ok" />
-			</span>
-		</c:if>
-		<c:if test="${result eq 'NOK'}">
-			<span class="error">
-				<spring:message code="request.result.nok" />
-			</span>
-		</c:if>
-	</c:if>
+	<nav>
+		<ul>
+			<li>
+				<a href="<c:url value="/persons/create" />"><spring:message code="menu.create" /></a>
+			</li>
+		</ul>
+	</nav>
 	<c:forEach var="p" items="${personList}">
 		<perso:person person="${p}"/>
 	</c:forEach>
