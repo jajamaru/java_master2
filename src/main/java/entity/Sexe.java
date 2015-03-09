@@ -18,11 +18,12 @@ public enum Sexe {
 
   public static class Values {
 
+    public static final String HOMME = "HOMME";
+    public static final String FEMME = "FEMME";
+    
     private Values() {
       //empty constructor
     }
 
-    public static final String HOMME = "HOMME";
-    public static final String FEMME = "FEMME";
   }
 }
