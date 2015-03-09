@@ -48,19 +48,29 @@ public class PersonServiceTest {
     Assert.assertNotNull(service.findPerson(1));
     Assert.assertNotNull(service.findPerson(1).getFriends());
     Assert.assertEquals(service.findPerson(1).getFriends().size(), 2);
+    Assert.assertEquals(service.findPerson(1).getFriendsWith().size(), 0);
     Assert.assertEquals(service.findPerson(1).getSexe(), Sexe.HOMME);
 
     Assert.assertNotNull(service.findPerson(2));
     Assert.assertNotNull(service.findPerson(2).getFriends());
-    Assert.assertEquals(service.findPerson(2).getFriends().size(), 2);
+    Assert.assertEquals(service.findPerson(2).getFriends().size(), 1);
+    Assert.assertEquals(service.findPerson(2).getFriendsWith().size(), 1);
     Assert.assertEquals(service.findPerson(2).getSexe(), Sexe.FEMME);
 
     Assert.assertNotNull(service.findPerson(3));
     Assert.assertNotNull(service.findPerson(3).getFriends());
-    Assert.assertEquals(service.findPerson(3).getFriends().size(), 1);
+    Assert.assertEquals(service.findPerson(3).getFriends().size(), 0);
+    Assert.assertEquals(service.findPerson(3).getFriendsWith().size(), 1);
     Assert.assertEquals(service.findPerson(3).getSexe(), Sexe.HOMME);
 
+    Assert.assertNotNull(service.findPerson(4));
+    Assert.assertNotNull(service.findPerson(4).getFriends());
+    Assert.assertEquals(service.findPerson(4).getFriends().size(), 0);
+    Assert.assertEquals(service.findPerson(4).getFriendsWith().size(), 1);
+    Assert.assertEquals(service.findPerson(4).getSexe(), Sexe.FEMME);
+
     Assert.assertNotNull(service.findPerson(5));
+    Assert.assertEquals(service.findPerson(5).getFriends().size(), 0);
     Assert.assertEquals(service.findPerson(5).getFriends().size(), 0);
     Assert.assertEquals(service.findPerson(5).getSexe(), Sexe.HOMME);
   }
@@ -121,12 +131,14 @@ public class PersonServiceTest {
   public void deleteFriendWhoIsNotFriendWithThisPerson() {
     PersonDto p3 = service.findPerson(3);
     final PersonDto p4 = service.findPerson(4);
-    Assert.assertEquals(p3.getFriends().size(), 1);
+    Assert.assertEquals(p3.getFriends().size(), 0);
+    Assert.assertEquals(p3.getFriendsWith().size(), 1);
 
     service.deleteSingleFriend(p3, p4);
 
     p3 = service.findPerson(3);
-    Assert.assertEquals(p3.getFriends().size(), 1);
+    Assert.assertEquals(p3.getFriends().size(), 0);
+    Assert.assertEquals(p3.getFriendsWith().size(), 1);
   }
 
   @Test
