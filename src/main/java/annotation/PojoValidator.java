@@ -58,32 +58,29 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     final boolean validPublicGetter = gettersAndSettersArePublic(gettersAndSetters);
     final boolean validProcessing = noProcessing(cl.getDeclaredMethods());
 
-    if (!validCompleteName) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
-    }
-    if (!validDoWithEntity) {
-      cv.buildConstraintViolationWithTemplate("{pojo.message.error.missing.entity}")
-          .addConstraintViolation();
-    }
-    if (!validAttributes) {
+    if (!validAttributes || !validAllAttributes || !validPublicGetter) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.private}")
           .addConstraintViolation();
-    }
-    if (!validAllAttributes) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.attribut.getter}")
           .addConstraintViolation();
-    }
-    if (!validPublicGetter) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.getter.public}")
           .addConstraintViolation();
+      return false;
+    }
+
+    if (!validCompleteName) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
     }
     if (!validProcessing) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.processing}")
           .addConstraintViolation();
     }
+    if (!validDoWithEntity) {
+      cv.buildConstraintViolationWithTemplate("{pojo.message.error.missing.entity}")
+          .addConstraintViolation();
+    }
 
-    return validCompleteName && validDoWithEntity && validAttributes && validAllAttributes
-        && validPublicGetter && validProcessing;
+    return validCompleteName && validDoWithEntity && validProcessing;
   }
 
   private boolean isValidName(final String name) {
@@ -119,11 +116,20 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
 
   private boolean allPrivateAttributs(final Field[] fields) {
     for (final Field itField : fields) {
-      if (!Modifier.isPrivate(itField.getModifiers())) {
+      if (!(isConstant(itField) || isPrivateAttribute(itField))) {
         return false;
       }
     }
     return true;
+  }
+
+  private boolean isPrivateAttribute(final Field field) {
+    return Modifier.isPrivate(field.getModifiers());
+  }
+
+  private boolean isConstant(final Field field) {
+    return Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())
+        && Modifier.isFinal(field.getModifiers());
   }
 
   private Set<Method> getGettersAndSetters(final Method[] methods) {
@@ -148,27 +154,50 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
 
   private boolean gettersAndSettersForAll(final Field[] fields,
       final Collection<Method> gettersAndSetters) {
-    final Set<String> gettersAndSettersName = new HashSet<String>();
-    for (final Method m : gettersAndSetters) {
-      gettersAndSettersName.add(m.getName());
-    }
+
+    final Set<String> gettersAndSettersName = getNameOfMethodList(gettersAndSetters);
 
     for (final Field f : fields) {
       final String comparedName = Character.toUpperCase(f.getName().charAt(0))
           + f.getName().substring(1);
       if (f.getType() == Boolean.class || f.getType() == boolean.class) {
-        if (!(gettersAndSettersName.contains(GETTER_BOOLEAN_PREFIX + comparedName) && gettersAndSettersName
-            .contains(SETTER_PREFIX + comparedName))) {
+        if (!getterAndSetterForBoolean(f, gettersAndSettersName, comparedName)) {
           return false;
         }
       } else {
-        if (!(gettersAndSettersName.contains(GETTER_PREFIX + comparedName) && gettersAndSettersName
-            .contains(SETTER_PREFIX + comparedName))) {
+        if (!getterAndSetterForOther(f, gettersAndSettersName, comparedName)) {
           return false;
         }
       }
     }
     return true;
+  }
+
+  private boolean getterAndSetterForBoolean(final Field field,
+      final Collection<String> gettersAndSettersName, final String comparedName) {
+    return isConstant(field)
+        || isValidGetterOrSetter(gettersAndSettersName, GETTER_BOOLEAN_PREFIX + comparedName,
+            SETTER_PREFIX + comparedName);
+  }
+
+  private boolean getterAndSetterForOther(final Field field,
+      final Collection<String> gettersAndSettersName, final String comparedName) {
+    return isConstant(field)
+        || isValidGetterOrSetter(gettersAndSettersName, GETTER_PREFIX + comparedName, SETTER_PREFIX
+            + comparedName);
+  }
+
+  private Set<String> getNameOfMethodList(final Collection<Method> methods) {
+    final Set<String> methodsName = new HashSet<String>();
+    for (final Method m : methods) {
+      methodsName.add(m.getName());
+    }
+    return methodsName;
+  }
+
+  private boolean isValidGetterOrSetter(final Collection<String> collection, final String prefixe,
+      final String suffixe) {
+    return collection.contains(prefixe) && collection.contains(suffixe);
   }
 
   private boolean noProcessing(final Method[] methods) {
