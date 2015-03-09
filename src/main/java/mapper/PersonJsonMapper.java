@@ -32,7 +32,17 @@ public class PersonJsonMapper {
     json.setName(dto.getName());
     json.setBirthday(dto.getBirthday());
     json.setSexe(dto.getSexe());
+    json.setFriends(_getIdFriends(dto.getFriends()));
+    json.getFriends().addAll(_getIdFriends(dto.getFriendsWith()));
     return json;
+  }
+
+  private static List<Integer> _getIdFriends(final List<PersonDto> list) {
+    final List<Integer> ids = new ArrayList<Integer>();
+    for (final PersonDto itDto : list) {
+      ids.add(itDto.getId());
+    }
+    return ids;
   }
 
 }

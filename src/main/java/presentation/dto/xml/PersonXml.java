@@ -17,13 +17,30 @@ import entity.Sexe;
  */
 public class PersonXml {
 
-  private Integer id;
+  private Integer       id;
 
-  private String  name;
+  private String        name;
 
-  private Sexe    sexe;
+  private Sexe          sexe;
 
-  private Date    birthday;
+  private Date          birthday;
+
+  private FriendListXml friends;
+
+  /**
+   * @return the friends
+   */
+  @XmlElement(name = "friends")
+  public final FriendListXml getFriends() {
+    return friends;
+  }
+
+  /**
+   * @param friends the friends to set
+   */
+  public final void setFriends(final FriendListXml friends) {
+    this.friends = friends;
+  }
 
   /**
    * @return the sexe

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import presentation.dto.PersonDto;
+import presentation.dto.xml.FriendListXml;
+import presentation.dto.xml.FriendXml;
 import presentation.dto.xml.PersonListXml;
 import presentation.dto.xml.PersonXml;
 
@@ -33,7 +35,25 @@ public class PersonXmlMapper {
     xml.setName(dto.getName());
     xml.setBirthday(dto.getBirthday());
     xml.setSexe(dto.getSexe());
+    xml.setFriends(_createFriendListXml(dto));
     return xml;
+  }
+
+  private static FriendListXml _createFriendListXml(final PersonDto dto) {
+    final FriendListXml friendList = new FriendListXml();
+    friendList.setFriends(_getListFriendXml(dto.getFriends()));
+    friendList.getFriends().addAll(_getListFriendXml(dto.getFriendsWith()));
+    return friendList;
+  }
+
+  private static List<FriendXml> _getListFriendXml(final List<PersonDto> list) {
+    final List<FriendXml> friendListXml = new ArrayList<FriendXml>();
+    for (final PersonDto itDto : list) {
+      final FriendXml friendXml = new FriendXml();
+      friendXml.setId(itDto.getId());
+      friendListXml.add(friendXml);
+    }
+    return friendListXml;
   }
 
 }
