@@ -50,7 +50,7 @@ public class InsertPersonController {
     if (result.hasErrors()) {
       return "formPerson";
     } else {
-      _persistPerson(form);
+      persistPerson(form);
       return "redirect:/persons";
     }
   }
@@ -60,7 +60,7 @@ public class InsertPersonController {
     return Arrays.asList(Sexe.Values.HOMME, Sexe.Values.FEMME);
   }
 
-  private void _persistPerson(final PersonForm form) {
+  private void persistPerson(final PersonForm form) {
     service.createPerson(PersonFormMapper.convertPersonFormToDto(form));
   }
 

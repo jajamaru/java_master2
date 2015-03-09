@@ -31,11 +31,11 @@ import exception.PersonNotFoundException;
 @Transactional(propagation = Propagation.REQUIRED)
 public class PersonService implements IPersonService {
 
-  private static Logger log = Logger.getLogger(PersonService.class);
+  private static final Logger log = Logger.getLogger(PersonService.class);
 
   @Autowired
   @Qualifier("personDao")
-  private IPersonDao    dao;
+  private IPersonDao          dao;
 
   /* (non-Javadoc)
    * @see service.IPersonService#createPerson(entity.PersonDo)
@@ -51,7 +51,7 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#deletePerson(int)
    */
   @Override
-  public int deletePerson(final int id) throws PersonNotFoundException {
+  public int deletePerson(final int id) {
     log.debug("Deleting a person with id " + id);
     final int nbDeleted = dao.delete(id);
     if (nbDeleted > 0) {
@@ -68,7 +68,7 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#updatePerson(entity.PersonDo)
    */
   @Override
-  public PersonDto updatePerson(final PersonDto dto) throws PersonNotFoundException {
+  public PersonDto updatePerson(final PersonDto dto) {
     log.debug("Updating a person " + dto);
     final PersonDo personDo = PersonMapper.convertDtoToDo(dto);
     try {
@@ -86,7 +86,7 @@ public class PersonService implements IPersonService {
    * @see service.IPersonService#findPerson(int)
    */
   @Override
-  public PersonDto findPerson(final int id) throws PersonNotFoundException {
+  public PersonDto findPerson(final int id) {
     log.debug("Retrieving a person with id " + id);
     try {
       final PersonDo personDo = dao.find(id);

@@ -29,7 +29,7 @@ nav ul li {
 }
 
 nav ul li:hover {
-	background-color: #ECE9E5;
+	background-color: #ddd;
 }
 
 nav>ul>li>a {
@@ -37,5 +37,10 @@ nav>ul>li>a {
 	display: block;
 	line-height: 56px;
 	padding: 0 24px;
+	text-decoration: none;
+}
+
+nav>ul>li>a:HOVER {
+	color: #fff;
 	text-decoration: none;
 }

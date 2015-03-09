@@ -22,6 +22,7 @@ public class PersonDto {
   private Sexe            sexe;
   private List<PersonDto> friends;
   private List<PersonDto> friendsWith;
+  
 
   /**
    * @return the friendsWith

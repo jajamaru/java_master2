@@ -30,23 +30,6 @@ article.person table caption {
 	width: 100%
 }
 
-/* article.person table * input[type="submit"] { */
-/* 	background: none; */
-/* 	border: none; */
-	
-/* 	padding: 0.5em; */
-/* 	background-color: orange; */
-/* } */
-
-/* article.person table * input[type="submit"]:HOVER { */
-/* 	background-color: #ff8080; */
-/* } */
-
-/* article.person table * input[type="submit"]:ACTIVE { */
-/* 	position: relative; */
-/* 	top: 1px; */
-/* } */
-
 article.person table thead tr {
 	border-bottom: 2px #000 solid;
 }
@@ -61,4 +44,17 @@ article.person table tbody tr:nth-child(odd) {
 
 article.person table tbody * td {
 	
+}
+
+article.person * a {
+	color: #444;
+}
+
+article.person * a:HOVER {
+	color: #000;
+	font-weight: bold;
+}
+
+article.person * a:VISITED {
+	color: #ccc;
 }

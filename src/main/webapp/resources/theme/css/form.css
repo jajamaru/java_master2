@@ -3,6 +3,10 @@
 	clear: left;
 }
 
+.form label {
+	width: 200px;
+}
+
 .form-error {
 	color: red;
 }

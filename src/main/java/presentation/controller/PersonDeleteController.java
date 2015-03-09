@@ -22,6 +22,8 @@ import exception.PersonNotFoundException;
 @Controller
 @RequestMapping("/persons")
 public class PersonDeleteController {
+  
+  private static final String REDIRECT = "redirect:/persons";
 
   @Autowired
   @Qualifier("personService")
@@ -30,7 +32,7 @@ public class PersonDeleteController {
   @RequestMapping(method = RequestMethod.DELETE)
   public String deleteListPerson(final Model model) {
     service.deleteAllPerson();
-    return "redirect:/persons";
+    return REDIRECT;
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -38,7 +40,7 @@ public class PersonDeleteController {
   final Integer id) {
     try {
       service.deletePerson(id);
-      return "redirect:/persons";
+      return REDIRECT;
     } catch (final PersonNotFoundException e) {
       return "404";
     }
@@ -50,7 +52,7 @@ public class PersonDeleteController {
     try {
       final PersonDto dto = service.findPerson(id);
       service.deleteAllFriends(dto);
-      return "redirect:/persons";
+      return REDIRECT;
     } catch (final PersonNotFoundException e) {
       return "404";
     }
@@ -64,7 +66,7 @@ public class PersonDeleteController {
       final PersonDto dto = service.findPerson(id);
       final PersonDto deleted = service.findPerson(idFriend);
       service.deleteSingleFriend(dto, deleted);
-      return "redirect:/persons";
+      return REDIRECT;
     } catch (final PersonNotFoundException e) {
       return "404";
     }

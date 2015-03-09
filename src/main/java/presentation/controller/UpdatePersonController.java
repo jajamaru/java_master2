@@ -43,7 +43,7 @@ public class UpdatePersonController {
     try {
       final PersonDto dto = service.findPerson(id);
       final List<PersonDto> allPersons = service.findAllPerson();
-      model.addAttribute("friendList", _createFriendForm(dto, allPersons));
+      model.addAttribute("friendList", createFriendForm(dto, allPersons));
       return "personFriends";
     } catch (final PersonNotFoundException e) {
       return "404";
@@ -60,7 +60,7 @@ public class UpdatePersonController {
       if (result.hasErrors()) {
         model.addAttribute("result", "NOK");
       } else {
-        _updateFriends(form);
+        updateFriends(form);
         model.addAttribute("result", "OK");
       }
       return "redirect:/persons";
@@ -69,11 +69,11 @@ public class UpdatePersonController {
     }
   }
 
-  private void _updateFriends(final FriendForm form) {
+  private void updateFriends(final FriendForm form) {
     service.updatePerson(PersonFormMapper.convertFriendFormToDto(form));
   }
 
-  private FriendForm _createFriendForm(final PersonDto refDto, final List<PersonDto> list) {
+  private FriendForm createFriendForm(final PersonDto refDto, final List<PersonDto> list) {
     return PersonFormMapper.createFriendForm(refDto, list);
   }
 

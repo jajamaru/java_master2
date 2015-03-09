@@ -26,10 +26,10 @@ import entity.PersonDo;
 @Transactional(propagation = Propagation.MANDATORY)
 public class PersonDao extends IPersonDao {
 
-  private static Logger log = Logger.getLogger(PersonDao.class);
+  private static final Logger log = Logger.getLogger(PersonDao.class);
 
   @PersistenceContext(unitName = "pu")
-  private EntityManager entityManager;
+  private EntityManager       entityManager;
 
   /* (non-Javadoc)
    * @see dao.IDao#find(int)
@@ -58,7 +58,7 @@ public class PersonDao extends IPersonDao {
    * @see dao.IDao#update(java.lang.Object)
    */
   @Override
-  public PersonDo update(final PersonDo obj) throws IllegalArgumentException {
+  public PersonDo update(final PersonDo obj) {
     log.debug("Updating a person " + obj);
     return entityManager.merge(obj);
   }

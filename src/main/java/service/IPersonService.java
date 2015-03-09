@@ -25,7 +25,7 @@ public interface IPersonService {
    * @param id of delete person
    * @return Number of deletion
    */
-  int deletePerson(final int id) throws PersonNotFoundException;
+  int deletePerson(final int id);
 
   /**
    * Delete all person
@@ -53,14 +53,14 @@ public interface IPersonService {
    * @param person Person to update
    * @return the personDto merged
    */
-  PersonDto updatePerson(final PersonDto person) throws PersonNotFoundException;
+  PersonDto updatePerson(final PersonDto person);
 
   /**
    * Retrieve a person by id
    * @param id Person's id
    * @return The person retrieved
    */
-  PersonDto findPerson(final int id) throws PersonNotFoundException;
+  PersonDto findPerson(final int id);
 
   /**
    * Retrieve all person

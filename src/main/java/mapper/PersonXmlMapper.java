@@ -17,36 +17,40 @@ import presentation.dto.xml.PersonXml;
  *
  */
 public class PersonXmlMapper {
+  
+  private PersonXmlMapper() {
+    //empty constructor
+  }
 
   public static PersonListXml getPersonInXml(final List<? extends PersonDto> list) {
     final PersonListXml persons = new PersonListXml();
     final List<PersonXml> pList = new ArrayList<PersonXml>();
     for (PersonDto person : list) {
-      final PersonXml xml = _createPersonXml(person);
+      final PersonXml xml = createPersonXml(person);
       pList.add(xml);
     }
     persons.setPerson(pList);
     return persons;
   }
 
-  private static PersonXml _createPersonXml(final PersonDto dto) {
+  private static PersonXml createPersonXml(final PersonDto dto) {
     final PersonXml xml = new PersonXml();
     xml.setId(dto.getId());
     xml.setName(dto.getName());
     xml.setBirthday(dto.getBirthday());
     xml.setSexe(dto.getSexe());
-    xml.setFriends(_createFriendListXml(dto));
+    xml.setFriends(createFriendListXml(dto));
     return xml;
   }
 
-  private static FriendListXml _createFriendListXml(final PersonDto dto) {
+  private static FriendListXml createFriendListXml(final PersonDto dto) {
     final FriendListXml friendList = new FriendListXml();
-    friendList.setFriends(_getListFriendXml(dto.getFriends()));
-    friendList.getFriends().addAll(_getListFriendXml(dto.getFriendsWith()));
+    friendList.setFriends(getListFriendXml(dto.getFriends()));
+    friendList.getFriends().addAll(getListFriendXml(dto.getFriendsWith()));
     return friendList;
   }
 
-  private static List<FriendXml> _getListFriendXml(final List<PersonDto> list) {
+  private static List<FriendXml> getListFriendXml(final List<PersonDto> list) {
     final List<FriendXml> friendListXml = new ArrayList<FriendXml>();
     for (final PersonDto itDto : list) {
       final FriendXml friendXml = new FriendXml();

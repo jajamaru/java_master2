@@ -47,16 +47,16 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     }
 
     final Class<?> cl = object.getClass();
-    final Set<Method> gettersAndSetters = _getGettersAndSetters(cl.getDeclaredMethods());
+    final Set<Method> gettersAndSetters = getGettersAndSetters(cl.getDeclaredMethods());
 
-    final boolean validCompleteName = _isOnlyClass(cl) && _isValidName(cl.getSimpleName())
-        && _isValidPackageName(cl);
-    final boolean validDoWithEntity = _doOnlyWithEntity(cl);
-    final boolean validAttributes = _allPrivateAttributs(cl.getDeclaredFields());
-    final boolean validAllAttributes = _gettersAndSettersForAll(cl.getDeclaredFields(),
+    final boolean validCompleteName = isOnlyClass(cl) && isValidName(cl.getSimpleName())
+        && isValidPackageName(cl);
+    final boolean validDoWithEntity = doOnlyWithEntity(cl);
+    final boolean validAttributes = allPrivateAttributs(cl.getDeclaredFields());
+    final boolean validAllAttributes = gettersAndSettersForAll(cl.getDeclaredFields(),
         gettersAndSetters);
-    final boolean validPublicGetter = _gettersAndSettersArePublic(gettersAndSetters);
-    final boolean validProcessing = _noProcessing(cl.getDeclaredMethods());
+    final boolean validPublicGetter = gettersAndSettersArePublic(gettersAndSetters);
+    final boolean validProcessing = noProcessing(cl.getDeclaredMethods());
 
     if (!validCompleteName) {
       cv.buildConstraintViolationWithTemplate("{pojo.message.error.name}").addConstraintViolation();
@@ -86,12 +86,12 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
         && validPublicGetter && validProcessing;
   }
 
-  private boolean _isValidName(final String name) {
+  private boolean isValidName(final String name) {
     return name.length() > 1 && (name.endsWith(DO_SUFFIXE) || name.endsWith(DTO_SUFFIXE))
         && Character.isUpperCase(name.charAt(0));
   }
 
-  private boolean _isValidPackageName(final Class<?> clazz) {
+  private boolean isValidPackageName(final Class<?> clazz) {
     if (clazz.getPackage() == null) {
       return false;
     }
@@ -101,11 +101,11 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return StringUtils.isAllLowerCase(StringUtils.join(packages.split(PACKAGE_SEPARATOR), ""));
   }
 
-  private boolean _isOnlyClass(final Class<?> clazz) {
+  private boolean isOnlyClass(final Class<?> clazz) {
     return !(clazz.isAnnotation() || clazz.isInterface() || clazz.isEnum());
   }
 
-  private boolean _doOnlyWithEntity(final Class<?> clazz) {
+  private boolean doOnlyWithEntity(final Class<?> clazz) {
     if (clazz.getSimpleName().endsWith(DO_SUFFIXE)) {
       for (final Annotation a : clazz.getAnnotations()) {
         if (a instanceof Entity) {
@@ -117,7 +117,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return true;
   }
 
-  private boolean _allPrivateAttributs(final Field[] fields) {
+  private boolean allPrivateAttributs(final Field[] fields) {
     for (final Field itField : fields) {
       if (!Modifier.isPrivate(itField.getModifiers())) {
         return false;
@@ -126,7 +126,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return true;
   }
 
-  private Set<Method> _getGettersAndSetters(final Method[] methods) {
+  private Set<Method> getGettersAndSetters(final Method[] methods) {
     final Set<Method> getterAndSetter = new HashSet<Method>();
     for (final Method m : methods) {
       if (m.getName().startsWith(GETTER_PREFIX) || m.getName().startsWith(SETTER_PREFIX)
@@ -137,7 +137,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return getterAndSetter;
   }
 
-  private boolean _gettersAndSettersArePublic(final Collection<Method> gettersAndSetters) {
+  private boolean gettersAndSettersArePublic(final Collection<Method> gettersAndSetters) {
     for (final Method m : gettersAndSetters) {
       if (!Modifier.isPublic(m.getModifiers())) {
         return false;
@@ -146,7 +146,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return true;
   }
 
-  private boolean _gettersAndSettersForAll(final Field[] fields,
+  private boolean gettersAndSettersForAll(final Field[] fields,
       final Collection<Method> gettersAndSetters) {
     final Set<String> gettersAndSettersName = new HashSet<String>();
     for (final Method m : gettersAndSetters) {
@@ -171,7 +171,7 @@ public class PojoValidator implements ConstraintValidator<Pojo, Object> {
     return true;
   }
 
-  private boolean _noProcessing(final Method[] methods) {
+  private boolean noProcessing(final Method[] methods) {
     final List<String> processingAllowed = Arrays.asList(PROCESSING_ALLOWED);
     for (final Method m : methods) {
       if (!(m.getName().startsWith(GETTER_BOOLEAN_PREFIX) || m.getName().startsWith(GETTER_PREFIX) || m

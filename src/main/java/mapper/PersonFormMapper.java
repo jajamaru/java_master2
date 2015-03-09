@@ -17,6 +17,10 @@ import presentation.model.PersonForm;
  */
 public class PersonFormMapper {
 
+  private PersonFormMapper() {
+    //empty constructor
+  }
+
   /**
    * Create a FriendForm object
    * @param refDto
@@ -32,11 +36,11 @@ public class PersonFormMapper {
     for (final PersonDto itDto : list) {
       if (!itDto.equals(refDto)) {
         if (refDto.getFriendsWith().contains(itDto)) {
-          listOfFriendWith.add(_createFriend(itDto, true));
+          listOfFriendWith.add(createFriend(itDto, true));
         } else if (refDto.getFriends().contains(itDto)) {
-          listOfFriend.add(_createFriend(itDto, true));
+          listOfFriend.add(createFriend(itDto, true));
         } else {
-          listOfFriend.add(_createFriend(itDto, false));
+          listOfFriend.add(createFriend(itDto, false));
         }
       }
     }
@@ -60,7 +64,7 @@ public class PersonFormMapper {
     return form;
   }
 
-  private static PersonDto _createDto(final FriendForm form) {
+  private static PersonDto createDto(final FriendForm form) {
     final PersonDto dto = new PersonDto();
     dto.setBirthday(form.getPerson().getBirthday());
     dto.setId(form.getPerson().getId());
@@ -89,34 +93,34 @@ public class PersonFormMapper {
    * @return
    */
   public static PersonDto convertFriendFormToDto(final FriendForm form) {
-    final PersonDto dto = _createDto(form);
+    final PersonDto dto = createDto(form);
 
     final List<Friend> friends = form.getFriends();
     final List<Friend> friendsWith = form.getFriendsWith();
 
     if (friends != null) {
-      dto.setFriends(_convertFriendListToDtoList(friends));
+      dto.setFriends(convertFriendListToDtoList(friends));
     }
 
     if (friendsWith != null) {
-      dto.setFriendsWith(_convertFriendListToDtoList(friendsWith));
+      dto.setFriendsWith(convertFriendListToDtoList(friendsWith));
     }
 
     return dto;
   }
 
-  private static List<PersonDto> _convertFriendListToDtoList(final List<Friend> list) {
+  private static List<PersonDto> convertFriendListToDtoList(final List<Friend> list) {
     final List<PersonDto> friends = new ArrayList<PersonDto>();
     for (final Friend itFriend : list) {
       if (itFriend.isFriendShip()) {
-        friends.add(_convertFriendToDto(itFriend));
+        friends.add(convertFriendToDto(itFriend));
       }
     }
     return friends;
 
   }
 
-  private static PersonDto _convertFriendToDto(final Friend form) {
+  private static PersonDto convertFriendToDto(final Friend form) {
     final PersonDto dto = new PersonDto();
     dto.setName(form.getPerson().getName());
     dto.setBirthday(form.getPerson().getBirthday());
@@ -125,7 +129,7 @@ public class PersonFormMapper {
     return dto;
   }
 
-  private static Friend _createFriend(final PersonDto dto, final boolean friendShip) {
+  private static Friend createFriend(final PersonDto dto, final boolean friendShip) {
     final Friend friend = new Friend();
     friend.setFriendShip(friendShip);
     friend.setPerson(createPersonForm(dto));

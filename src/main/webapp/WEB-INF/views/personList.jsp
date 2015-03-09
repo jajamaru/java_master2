@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="perso" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="perso"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,15 +13,9 @@
 <link href="<c:url value="resources/css/form.css" />" rel="stylesheet" />
 </head>
 <body>
-	<nav>
-		<ul>
-			<li>
-				<a href="<c:url value="/persons/create" />"><spring:message code="menu.create" /></a>
-			</li>
-		</ul>
-	</nav>
+	<perso:menu />
 	<c:forEach var="p" items="${personList}">
-		<perso:person person="${p}"/>
+		<perso:person person="${p}" />
 	</c:forEach>
 </body>
 </html>

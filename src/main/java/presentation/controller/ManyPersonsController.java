@@ -45,25 +45,24 @@ public class ManyPersonsController {
 
   @ResponseBody
   @RequestMapping(value = "/json", method = RequestMethod.GET, produces = "application/json")
-  public String getListPersonWithReturnTypeJson() throws JsonGenerationException,
-      JsonMappingException, IOException {
+  public String getListPersonWithReturnTypeJson() throws IOException {
     final List<? extends PersonDto> list = service.findAllPerson();
     final ObjectMapper mapper = new ObjectMapper();
-    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(_getPersonInJson(list));
+    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getPersonInJson(list));
   }
 
   @ResponseBody
   @RequestMapping(value = "/xml", method = RequestMethod.GET, produces = "application/xml")
   public PersonListXml getListPersonWithReturnTypeXml() {
     final List<? extends PersonDto> list = service.findAllPerson();
-    return _getPersonInXml(list);
+    return getPersonInXml(list);
   }
 
-  private PersonJson[] _getPersonInJson(final List<? extends PersonDto> list) {
+  private PersonJson[] getPersonInJson(final List<? extends PersonDto> list) {
     return PersonJsonMapper.getPersonInJson(list);
   }
 
-  private PersonListXml _getPersonInXml(final List<? extends PersonDto> list) {
+  private PersonListXml getPersonInXml(final List<? extends PersonDto> list) {
     return PersonXmlMapper.getPersonInXml(list);
   }
 
